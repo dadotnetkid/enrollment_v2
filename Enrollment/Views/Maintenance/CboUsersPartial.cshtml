@@ -1,0 +1,14 @@
+﻿@{
+    Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "UserId";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.Caption = "User";
+
+        settings.CallbackRouteValues = new
+        {
+            Action = "CboUsersPartial",
+            Controller = "Maintenance",
+        };
+    }).Bind(ViewBag.UserId).BindList(Model).GetHtml();
+}

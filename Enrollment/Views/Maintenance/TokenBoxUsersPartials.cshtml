@@ -1,0 +1,23 @@
+﻿@using System.Web.UI.WebControls
+
+@{
+    Html.DevExpress().TokenBox(settings =>
+    {
+        settings.Name = "UserId";
+        settings.Properties.TextField = "FullName";
+        settings.Properties.ValueField = "Id";
+        settings.Properties.Caption = "Users";
+        settings.Width = Unit.Percentage(100);
+        settings.PreRender = (s, e) =>
+        {
+            ASPxTokenBox tokenBox = s as ASPxTokenBox;
+            if (ViewBag.Users != null)
+            {
+                foreach (var i in (IEnumerable<string>)ViewBag.Users)
+                {
+                    tokenBox.Tokens.Add(i);
+                }
+            }
+        };
+    }).BindList(Model).GetHtml();
+}

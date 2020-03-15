@@ -1,0 +1,86 @@
+﻿@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "SchoolYearMasterGridView";
+
+        settings.Width = Unit.Percentage(100);
+
+        settings.SettingsDetail.ShowDetailRow = true;
+        settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = true;
+
+        settings.CallbackRouteValues = new
+        {
+            Controller = "Subjects",
+            Action = "MasterGridCoursesPartial",
+            studentId = ViewBag.StudentId
+        };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Subjects", Action = "AvailableSubjectsGridViewAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Subjects", Action = "AvailableSubjectsGridViewUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Subjects", Action = "AvailableSubjectsGridViewDelete" };
+
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.SetDetailRowTemplateContent(c =>
+        {
+
+        });
+
+        settings.AddAddEditDeleteToolbar(items =>
+        {
+            items.CanAdd = User.UserInAction("Add Available Subjects");
+            items.CanEdit = User.UserInAction("Edit Available Subjects");
+            items.CanDelete = User.UserInAction("Delete Available Subjects");
+
+            items.MenuItems.Add(item =>
+            {
+                item.SetTemplateContent(s =>
+                {
+                    Html.DevExpress().Button(btnSettings =>
+                    {
+                        btnSettings.Name = "btnCopyAvailableSubjects";
+                        btnSettings.Text = "Copy Subjects";
+
+                        btnSettings.ClientSideEvents.Click = "function(s,e){showCopySubjectPopup()}";
+
+                    }).GetHtml();
+
+                });
+            });
+
+
+        });
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 300;
+
+
+
+
+        settings.Columns.Add("SchoolYearAndSemester");
+
+
+
+
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

@@ -1,0 +1,21 @@
+﻿
+@{
+    Html.DevExpress().PopupControl(pop =>
+    {
+        pop.HeaderText = "Buy Credit";
+        pop.Width = 700;
+        pop.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+        pop.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        pop.Name = "popup_credits";
+        pop.Modal = true;
+        pop.ShowOnPageLoad = true;
+        pop.CloseOnEscape = false;
+        pop.ShowCloseButton = true;
+//   pop.ClientSideEvents.CloseUp = "function(s,e){EnrollmentsGridView.CancelEdit()}";
+pop.CloseAction = CloseAction.CloseButton;
+        pop.SetContent(() =>
+        {
+            Html.RenderAction("AddEditBuyCreditPartial", new { state = Request.Params["state"] });
+        });
+    }).GetHtml();
+}

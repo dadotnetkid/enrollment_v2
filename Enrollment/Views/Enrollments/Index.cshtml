@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Enrollment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Html.Action("EnrollmentsGridViewPartial")
+
+<script>
+    function populateSubjects(id) {
+        $.ajax({
+            url: '@Url.Action("TokenAvailableSubjectPartial")',
+            data: { courseId: id },
+            success: function (e) {
+                $('#token-subject').html(e);
+            }
+        });
+    }
+    function populateCboAvailableCourse(id) {
+        $.ajax({
+            url: '@Url.Action("CboAvailableCourse")',
+            data: { SchoolYearId: id },
+            success: function (e) {
+                $('#cbo-available-course').html(e);
+            }
+        });
+    }
+</script>

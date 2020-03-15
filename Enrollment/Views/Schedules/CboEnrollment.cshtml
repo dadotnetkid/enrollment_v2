@@ -1,0 +1,10 @@
+﻿@model UserDetails
+
+@Html.DevExpress().ComboBox(settings =>
+{
+    settings.Name = "EnrollmentId";
+    settings.Properties.ValueField = "Id";
+    settings.Properties.TextField = "AvailableCourses.AvailableCourse";
+    settings.Properties.Caption = "Enrolled Course";
+    settings.CallbackRouteValues = new {Controller = "Schedules", Action = "CboEnrollment"};
+}).BindList(Model?.Enrollments).GetHtml()

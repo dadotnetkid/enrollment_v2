@@ -1,0 +1,11 @@
+﻿@model AvailableSubjects
+    @{
+        Html.DevExpress().ComboBoxFor(m => m.SubjectId, settings =>
+        {
+            settings.Width = Unit.Percentage(100);
+            settings.Properties.Caption = "Subjects";
+            settings.Properties.TextField = "Subject";
+            settings.Properties.ValueField = "Id";
+            settings.CallbackRouteValues = new {Controller = "FileManagement",Action= "CboSubjectsPartial" };
+        }).BindList(ViewBag.Subjects).GetHtml();
+    }

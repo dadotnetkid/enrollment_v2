@@ -1,0 +1,26 @@
+﻿@{
+    Html.DevExpress().PopupControl(pop =>
+    {
+        pop.HeaderText = "Billing Statement";
+
+        pop.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+        pop.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        pop.Name = "popup_report_billing_statement";
+        pop.Modal = true;
+        pop.ShowOnPageLoad = true;
+        pop.CloseOnEscape = false;
+        pop.ShowCloseButton = true;
+     
+        pop.CloseAction = CloseAction.CloseButton;
+        pop.Maximized = true;
+        pop.SetContent(() =>
+        {
+            Html.DevExpress().WebDocumentViewer(web =>
+            {
+                web.Name = "rptWebDocumentViewer";
+                web.Width = Unit.Percentage(100);
+
+            }).Bind(Model).GetHtml();
+        });
+    }).GetHtml();
+}

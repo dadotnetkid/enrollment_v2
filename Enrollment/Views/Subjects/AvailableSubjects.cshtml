@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Available Subjects";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Html.Action("AvailableSubjectsGridView")
+<div id="container">
+
+</div>
+<script>
+    function showCopySubjectPopup() {
+        showLoading();
+        $.ajax({
+            url: '@Url.Action("CopyAvailableSubjects")',
+            success: function (obj) {
+                $('#container').html(obj);
+                hideLoading();
+            }
+        });
+    }
+</script>

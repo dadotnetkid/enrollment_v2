@@ -1,0 +1,22 @@
+﻿@model Messages
+@{
+    Html.DevExpress().PopupControl(pop =>
+    {
+        pop.Name = Model?.Subject + "_" + Model?.Id;
+        pop.HeaderText = Model?.Subject;
+        pop.Width = Unit.Pixel(700);
+        pop.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+        pop.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        pop.ClientSideEvents.CloseButtonClick = "function(s,e){message()}";
+        pop.Modal = true;
+        pop.ShowOnPageLoad = true;
+        pop.CloseOnEscape = false;
+        pop.ShowCloseButton = true;
+
+        pop.CloseAction = CloseAction.CloseButton;
+        pop.SetContent(() =>
+        {
+            Html.RenderAction("AddEditMessagePartial", new { messageId = Model?.Id });
+        });
+    }).GetHtml();
+}

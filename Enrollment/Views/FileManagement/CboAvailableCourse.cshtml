@@ -1,0 +1,22 @@
+﻿@{
+    Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "AvailableCourseId";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.Caption = "Available Course";
+        settings.Properties.ValueField = "Id";
+        settings.Properties.TextField = "Courses.Course";
+        settings.CallbackRouteValues = new { controller = "FileManagement", Action = "CboAvailableCourse" };
+    })
+        .BindList(Model).Bind(ViewBag.SchoolYearId)
+        .GetHtml();
+}
+
+
+
+@*Html.DevExpress().ComboBoxFor(m => m.AvailableCourseId, settings =>
+{
+settings.Properties.Caption = "Available Course";
+settings.Properties.TextField = "Courses.Course";
+settings.Properties.ValueField = "Id";
+}).BindList(new UnitOfWork().AvailableCoursesRepo.Get()).GetHtml();*@

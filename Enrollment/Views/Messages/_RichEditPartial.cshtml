@@ -1,0 +1,10 @@
+@using DevExpress.Web.ASPxRichEdit
+@Html.DevExpress().RichEdit(settings => {
+    settings.Name = "Message";
+    settings.CallbackRouteValues = new { Controller = "Messages", Action = "RichEditPartial" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Height = Unit.Percentage(100);
+    settings.ReadOnly = false;
+        settings.WorkDirectory = "~/";
+        settings.RibbonMode = RichEditRibbonMode.Ribbon;
+}).GetHtml()

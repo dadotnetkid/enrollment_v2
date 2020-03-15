@@ -1,0 +1,51 @@
+﻿@model EnrolledSubject
+    @{ 
+        string studentId = Request.Params["studentId"];
+    }
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().ComboBoxFor(m => m.EnrollmentId, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "S.Y";
+                settings.Properties.ValueField = "Id";
+                settings.Properties.TextField = "AvailableCourses.AvailableCourse";
+                settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){AvailableSubjectIds.PerformCallback({enrollmentId:EnrollmentId.GetValue()})}";
+                settings.Properties.ClientSideEvents.Init = "function(s,e){AvailableSubjectIds.PerformCallback({enrollmentId:EnrollmentId.GetValue()})}";
+            })
+                .BindList(new UnitOfWork().EnrollmentsRepo.Get(m => m.StudentId == studentId))
+                .Bind(new UnitOfWork().EnrollmentsRepo.Fetch(m=>m.StudentId== studentId).OrderByDescending(m => m.Id).FirstOrDefault()?.Id).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-lg-12">
+        @{
+            Html.RenderAction("TokenEnrolledSubjectAvailableSubjectPartial");
+        }
+    </div>
+</div>
+
+
+<div class="row margin-top-10">
+    <div class="col-lg-12 col-md-12 ">
+        @{
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "EnrolledSubjectsGridViewbtnSubmit";
+                settings.Text = "Submit";
+                settings.ClientSideEvents.Click = "function(s,e){EnrolledSubjectsGridView.UpdateEdit()}";
+
+            }).GetHtml();
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "EnrolledSubjectsGridViewbtnCancel";
+                settings.Text = "Cancel";
+                settings.ControlStyle.CssClass = "margin-left-10";
+                settings.ClientSideEvents.Click = "function(s,e){EnrolledSubjectsGridView.CancelEdit()}";
+            }).GetHtml();
+        }
+    </div>
+</div>

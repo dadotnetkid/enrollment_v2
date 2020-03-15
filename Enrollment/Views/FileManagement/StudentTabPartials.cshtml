@@ -1,0 +1,31 @@
+﻿@Html.DevExpress().PageControl(settings =>
+{
+    settings.Name = "StudentTabPartials";
+    settings.Width = Unit.Percentage(100);
+    settings.CallbackRouteValues = new {Controller = "FileManagement", Action = "StudentTabPartials"};
+
+    settings.TabPages.Add(tab =>
+    {
+        tab.Name = "New Students";
+        tab.Text = "New Students";
+        tab.SetContent(() =>
+        {
+            Html.RenderAction("StudentsGridViewPartial");
+        });
+
+    });
+    foreach (var i in new UnitOfWork().CoursesRepo.Get())
+    {
+        settings.TabPages.Add(tab =>
+        {
+            tab.Name = i.Id.ToString();
+            tab.Text = i.Course;
+            tab.SetContent(() =>
+            {
+                Html.RenderAction("StudentsGridViewPartial", new {courseId = i.Id});
+            });
+
+        });
+    }
+
+}).GetHtml()

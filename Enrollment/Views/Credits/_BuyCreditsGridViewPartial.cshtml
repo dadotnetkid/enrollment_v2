@@ -1,0 +1,119 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "BuyCreditsGridView";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "Credits", Action = "BuyCreditsGridViewPartial" };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Credits", Action = "BuyCreditsGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Credits", Action = "BuyCreditsGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Credits", Action = "BuyCreditsGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+//settings.AddAddEditDeleteToolbar(true, false, false);
+settings.SettingsBehavior.AllowFocusedRow = true;
+
+        settings.Columns.Add("Users.UserDetails.FullName");
+        settings.Columns.Add("State");
+        settings.Columns.Add("Credit");
+        settings.Columns.Add("AmountPaid");
+        settings.Columns.Add("DateCreated");
+        settings.Columns.Add("DatePaid");
+        settings.Columns.Add(col =>
+        {
+            col.Width = 50;
+            col.ColumnType = MVCxGridViewColumnType.HyperLink;
+            col.SetDataItemTemplateContent(content =>
+            {
+
+                var state = DataBinder.Eval(content.DataItem, "State");
+
+
+                using (Html.BeginForm("PayBuyCreditsPartial", "credits", new { id = content.KeyValue, state = state }, FormMethod.Post))
+                {
+                    ViewContext.Writer.Write(Html.AntiForgeryToken());
+                    if ((string)state == "Transfer")
+                    {
+                        Html.DevExpress().Button(hSettings =>
+                            {
+                                hSettings.Name = "cr-approved-" + content.KeyValue;
+                                hSettings.Text = "Appr";
+                                hSettings.UseSubmitBehavior = false;
+                                hSettings.RouteValues = new { Controller = "Credits", Action = "ValidateTransferPartial", isApproved = true };
+
+                                hSettings.ClientVisible = Convert.ToDecimal(DataBinder.Eval(content.DataItem, "AmountPaid")) <= 0 ? true : false;
+                            }).GetHtml();
+                        Html.DevExpress().Button(hSettings =>
+                        {
+                            hSettings.Name = "cr-not-approved-" + content.KeyValue;
+                            hSettings.Text = "Not Appr";
+                            hSettings.UseSubmitBehavior = false;
+                            hSettings.RouteValues = new { Controller = "Credits", Action = "ValidateTransferPartial", isApproved = true };
+
+                         //   hSettings.ClientVisible = Convert.ToDecimal(DataBinder.Eval(content.DataItem, "AmountPaid")) <= 0 ? true : false;
+                        }).GetHtml();
+                    }
+                    else
+                    {
+                        Html.DevExpress().Button(hSettings =>
+                            {
+                                hSettings.Name = "cr-" + content.KeyValue;
+                                hSettings.Text = "Pay Credit";
+                                hSettings.UseSubmitBehavior = true;
+                                hSettings.ClientVisible = Convert.ToDecimal(DataBinder.Eval(content.DataItem, "AmountPaid")) <= 0 ? true : false;
+                            }).GetHtml();
+                    }
+                }
+
+            });
+        });
+        settings.SetEditFormTemplateContent(col =>
+            {
+                Html.DevExpress().PopupControl(pop =>
+        {
+    pop.HeaderText = "Buy Credit";
+    pop.Width = 700;
+    pop.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+    pop.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+    pop.Name = col.KeyValue + "_popup";
+    pop.Modal = true;
+    pop.ShowOnPageLoad = true;
+    pop.CloseOnEscape = false;
+    pop.ShowCloseButton = true;
+    pop.ClientSideEvents.CloseUp = "function(s,e){EnrollmentsGridView.CancelEdit()}";
+    pop.CloseAction = CloseAction.CloseButton;
+    pop.SetContent(() =>
+        {
+            Html.RenderAction("AddEditBuyCreditPartial", new { creditId = col.KeyValue });
+        });
+}).GetHtml();
+
+            });
+//      settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Credit").DisplayFormat= "00.00";
+//    settings.Settings.ShowFooter = true;
+});
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

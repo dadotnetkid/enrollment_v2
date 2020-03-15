@@ -1,0 +1,45 @@
+﻿
+@model Courses
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().TextBoxFor(m=>m.Course,settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "Course";
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.CourseCode, settings =>
+               {
+                   settings.Width = Unit.Percentage(100);
+                   settings.Properties.Caption = "Course Code";
+               }).GetHtml();
+        }
+    </div>
+</div>
+
+<div class="row margin-top-10">
+    <div class="col-lg-12 col-md-12 ">
+        @{
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "BillingsGridViewbtnSubmit";
+                settings.Text = "Submit";
+                settings.ClientSideEvents.Click = "function(s,e){CoursesGridView.UpdateEdit()}";
+
+            }).GetHtml();
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "BillingsGridViewbtnCancel";
+                settings.Text = "Cancel";
+                settings.ControlStyle.CssClass = "margin-left-10";
+                settings.ClientSideEvents.Click = "function(s,e){CoursesGridView.CancelEdit()}";
+            }).GetHtml();
+        }
+    </div>
+</div>

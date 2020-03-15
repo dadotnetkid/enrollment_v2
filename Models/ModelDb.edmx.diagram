@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2d3af104b4f046ac8514e78536113cee" Name="Diagram1" ZoomLevel="121">
+        <EntityTypeShape EntityType="Model.Actions" Width="1.5" PointX="0.75" PointY="2" />
+        <EntityTypeShape EntityType="Model.AvailableCourses" Width="1.5" PointX="5.25" PointY="19.75" />
+        <EntityTypeShape EntityType="Model.Billings" Width="1.5" PointX="9.75" PointY="9.5" />
+        <EntityTypeShape EntityType="Model.Courses" Width="1.5" PointX="3" PointY="21.5" />
+        <EntityTypeShape EntityType="Model.Enrollments" Width="1.5" PointX="7.5" PointY="6.625" />
+        <EntityTypeShape EntityType="Model.Logs" Width="1.5" PointX="5.25" PointY="12.75" />
+        <EntityTypeShape EntityType="Model.Provinces" Width="1.5" PointX="9.75" PointY="2.25" />
+        <EntityTypeShape EntityType="Model.SchoolYears" Width="1.5" PointX="3" PointY="18.75" />
+        <EntityTypeShape EntityType="Model.Sections" Width="1.5" PointX="0.75" PointY="5" />
+        <EntityTypeShape EntityType="Model.Semesters" Width="1.5" PointX="0.75" PointY="19" />
+        <EntityTypeShape EntityType="Model.sysdiagrams" Width="1.5" PointX="0.75" PointY="13" />
+        <EntityTypeShape EntityType="Model.Towns" Width="1.5" PointX="12" PointY="2.125" />
+        <EntityTypeShape EntityType="Model.UserClaims" Width="1.5" PointX="5.25" PointY="10" />
+        <EntityTypeShape EntityType="Model.UserLogins" Width="1.5" PointX="5.25" PointY="4.125" />
+        <EntityTypeShape EntityType="Model.UserRoles" Width="1.5" PointX="0.75" PointY="10" />
+        <EntityTypeShape EntityType="Model.UserRolesInActions" Width="1.5" PointX="3" PointY="16" />
+        <EntityTypeShape EntityType="Model.Users" Width="1.5" PointX="3" PointY="7.125" />
+        <AssociationConnector Association="Model.FK_AvailableCourses_Courses" />
+        <AssociationConnector Association="Model.FK_AvailableCourses_SchoolYears" />
+        <AssociationConnector Association="Model.FK_Enrollments_AvailableCourses" />
+        <AssociationConnector Association="Model.FK_Billings_Enrollments" />
+        <AssociationConnector Association="Model.FK_Logs_Users" />
+        <AssociationConnector Association="Model.FK_Towns_Towns" />
+        <AssociationConnector Association="Model.FK_SchoolYears_Semesters" />
+        <AssociationConnector Association="Model.FK_UserClaims_Users" />
+        <AssociationConnector Association="Model.FK_UserLogins_Users" />
+        <AssociationConnector Association="Model.FK_UserRolesInActions_UserRoles" />
+        <AssociationConnector Association="Model.UsersInRoles" />
+        <EntityTypeShape EntityType="Model.EnrolledSubject" Width="1.5" PointX="9.75" PointY="5" />
+        <AssociationConnector Association="Model.FK_EnrolledSubject_Enrollments" />
+        <EntityTypeShape EntityType="Model.Grades" Width="1.5" PointX="12" PointY="5" />
+        <AssociationConnector Association="Model.FK_Gradings_EnrolledSubject" />
+        <EntityTypeShape EntityType="Model.AvailableMiscellaneous" Width="1.5" PointX="7.5" PointY="20" />
+        <EntityTypeShape EntityType="Model.Miscellaneous" Width="1.5" PointX="5.25" PointY="17.125" />
+        <AssociationConnector Association="Model.FK_AvailableMiscellaneous_AvailableCourses" />
+        <AssociationConnector Association="Model.FK_AvailableMiscellaneous_Miscellaneous" />
+        <EntityTypeShape EntityType="Model.Messages" Width="1.5" PointX="7.375" PointY="12.75" />
+        <EntityTypeShape EntityType="Model.Announcements" Width="1.5" PointX="12.375" PointY="8.75" />
+        <EntityTypeShape EntityType="Model.AvailableSubjects" Width="1.5" PointX="10.5" PointY="14.125" />
+        <AssociationConnector Association="Model.FK_AvailableSubjects_AvailableCourses" />
+        <AssociationConnector Association="Model.FK_EnrolledSubject_AvailableSubjects" />
+        <EntityTypeShape EntityType="Model.Schedules" Width="1.5" PointX="12.75" PointY="14.75" />
+        <AssociationConnector Association="Model.FK_Schedules_AvailableSubjects" />
+        <EntityTypeShape EntityType="Model.Credits" Width="1.5" PointX="5.25" PointY="27.25" />
+        <AssociationConnector Association="Model.FK_Credits_Users" />
+        <EntityTypeShape EntityType="Model.Subjects" Width="1.5" PointX="3.375" PointY="0.875" />
+        <AssociationConnector Association="Model.FK_AvailableSubjects_Subjects" />
+        <EntityTypeShape EntityType="Model.UserDetails" Width="1.5" PointX="5.25" PointY="23.25" />
+        <AssociationConnector Association="Model.FK_AvailableSubjects_UserDetails" />
+        <AssociationConnector Association="Model.FK_Enrollments_UserDetails" />
+        <AssociationConnector Association="Model.FK_UserDetails_Users" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

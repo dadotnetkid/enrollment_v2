@@ -1,0 +1,39 @@
+﻿@{
+    var userId = User.Identity.GetUserId();
+    var totalCredit = "00";// new UnitOfWork().CreditsRepo.Fetch(m => m.UserId == userId && m.State == "Paid")?.Sum(m => m.Credit).ToString("00.00");
+}
+<li class="dropdown messages-menu">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-dollar"> </i> Credit: @totalCredit
+    </a>
+
+    <ul class="dropdown-menu">
+
+        <li><a href="#" onclick="showBuyCredit()"><span class="fa fa-shopping-cart"></span> Buy</a></li>
+        <li><a href="#"onclick="showTransferCredit()"><span class="fa fa-send"></span>  Transfer</a></li>
+        <li class="footer"><a href="@Url.Action("buycredit","credits")">See History</a></li>
+    </ul>
+</li>
+
+
+<script>
+    function showBuyCredit() {
+        $.ajax({
+            url: '@Url.Action("PopupAddEditBuyCreditsPartial","credits")',
+            success: function (e) {
+                $('#credit-container').html(e);
+
+            }
+        });
+    }
+    function showTransferCredit() {
+        $.ajax({
+            url: '@Url.Action("PopupAddEditBuyCreditsPartial","credits")',
+            data: { state:"Transfer"},
+            success: function (e) {
+                $('#credit-container').html(e);
+
+            }
+        });
+    }
+</script>

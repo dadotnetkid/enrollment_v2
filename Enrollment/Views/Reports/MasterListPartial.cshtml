@@ -1,0 +1,21 @@
+﻿
+@model Enrollment.Controllers.MasterListViewModel
+    
+
+
+<div class="row">
+    <div class="col-lg-3">
+        @{
+            Html.DevExpress().ComboBoxFor(m => m.AvailableCourseId, settings =>
+            {
+                settings.Properties.TextField = "AvailableCourse";
+                settings.Properties.ValueField = "Id";
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "Available Course";
+                settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){$('#ajax-master-list').submit()}";
+            })
+                .BindList(new UnitOfWork().AvailableCoursesRepo.Get())
+                .GetHtml();
+        }
+    </div>
+</div>

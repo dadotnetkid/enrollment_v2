@@ -1,0 +1,40 @@
+﻿@{
+    Html.DevExpress().TokenBox(settings =>
+    {
+        settings.Name = "AvailableSubjectIds";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.Caption = "Subjects";
+        settings.Properties.ValueField = "Id";
+        settings.Properties.TextField = "SubjectCode";
+        settings.CallbackRouteValues = new { controller = "Enrollments", Action = "TokenAvailableSubjectPartial", courseId = ViewBag.CourseId, enrollmentId = ViewBag.EnrollmentId };
+
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.CaseSensitiveTokens = false;
+
+        settings.PreRender = (s, e) =>
+        {
+            if (ViewBag.EnrollmentId != null)
+            {
+                int? enrollmentId = (ViewBag.EnrollmentId);
+                var tkb = s as MVCxTokenBox;
+                foreach (var i in new UnitOfWork().EnrolledSubjectRepo.Get(m => m.EnrollmentId == enrollmentId))
+                {
+                    tkb.Tokens.Add(i.AvailableSubjects.SubjectCode);
+
+                }
+            }
+            else
+            {
+                var tkb = s as MVCxTokenBox;
+                foreach (var i in Model as List<AvailableSubjects>)
+                {
+                    tkb.Tokens.Add(i.SubjectCode);
+
+                }
+            }
+
+        };
+    })
+        .BindList(Model)
+        .GetHtml();
+}

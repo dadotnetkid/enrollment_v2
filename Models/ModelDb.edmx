@@ -1,0 +1,1821 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Actions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Action" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Announcements">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Announcement" Type="nvarchar(max)" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="AvailableCourses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseId" Type="int" />
+          <Property Name="SchoolYearId" Type="int" />
+        </EntityType>
+        <EntityType Name="AvailableMiscellaneous">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AvailableCourseId" Type="int" />
+          <Property Name="MiscellaneousId" Type="int" />
+        </EntityType>
+        <EntityType Name="AvailableSubjects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubjectId" Type="int" />
+          <Property Name="AvailableCourseId" Type="int" />
+          <Property Name="SubjectCode" Type="nvarchar" MaxLength="128" />
+          <Property Name="TeacherId" Type="nvarchar" MaxLength="128" />
+          <Property Name="Schedule" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Billings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EnrollmentId" Type="int" />
+          <Property Name="OfficialReceipt" Type="nvarchar" MaxLength="128" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="Type" Type="nvarchar" MaxLength="128" />
+          <Property Name="DateCreated" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Courses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Course" Type="nvarchar" MaxLength="128" />
+          <Property Name="CourseCode" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Credits">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Credit" Type="int" Nullable="false" />
+          <Property Name="AmountPaid" Type="money" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="DatePaid" Type="datetime2" Precision="7" />
+          <Property Name="PayBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="PayId" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="EnrolledSubject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EnrollmentId" Type="int" />
+          <Property Name="AvailableSubjectId" Type="int" />
+        </EntityType>
+        <EntityType Name="Enrollments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="nvarchar" MaxLength="128" />
+          <Property Name="AvailableCourseId" Type="int" />
+          <Property Name="IsDrop" Type="bit" />
+        </EntityType>
+        <EntityType Name="Grades">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EnrolledSubjectId" Type="int" />
+          <Property Name="Prelim" Type="money" />
+          <Property Name="MidTerm" Type="money" />
+          <Property Name="FinalTerm" Type="money" />
+        </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TableName" Type="nvarchar(max)" />
+          <Property Name="OldValues" Type="nvarchar(max)" />
+          <Property Name="NewValues" Type="nvarchar(max)" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="Action" Type="nvarchar(max)" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MessageFrom" Type="nvarchar" MaxLength="128" />
+          <Property Name="MessageTo" Type="nvarchar" MaxLength="128" />
+          <Property Name="Subject" Type="nvarchar(max)" />
+          <Property Name="Message" Type="nvarchar(max)" />
+          <Property Name="Files" Type="varbinary(max)" />
+          <Property Name="FileName" Type="nvarchar(max)" />
+          <Property Name="MimeType" Type="nvarchar(max)" />
+          <Property Name="ExtensionName" Type="nvarchar(max)" />
+          <Property Name="DateCreated" Type="datetime2" Precision="7" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Miscellaneous">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MiscellaneousName" Type="nvarchar" MaxLength="128" />
+          <Property Name="Cost" Type="money" />
+        </EntityType>
+        <EntityType Name="Provinces">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="SortOrder" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Schedules">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AvailableSubjectId" Type="int" Nullable="false" />
+          <Property Name="TimeIn" Type="datetime2" Precision="7" />
+          <Property Name="TimeOut" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="SchoolYears">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SchoolYear" Type="nvarchar" MaxLength="128" />
+          <Property Name="SemesterId" Type="int" />
+          <Property Name="StartDate" Type="datetime2" Precision="7" />
+          <Property Name="EndDate" Type="datetime2" Precision="7" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Sections">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Section" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Semesters">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Semester" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="DescriptiveTitle" Type="nvarchar(max)" />
+          <Property Name="Unit" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Towns">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProvinceId" Type="int" />
+          <Property Name="SortOrder" Type="int" />
+        </EntityType>
+        <EntityType Name="UserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="UserDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="128" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="128" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="128" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="128" />
+          <Property Name="SchoolId" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="UserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="UserRolesInActions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" />
+          <Property Name="Action" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="BiometricId" Type="int" />
+          <Property Name="Email" Type="nvarchar" MaxLength="128" />
+          <Property Name="EmailConfirmed" Type="bit" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="25" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" />
+          <Property Name="TwoFactorEnabled" Type="bit" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" />
+          <Property Name="AccessFailedCount" Type="int" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastUpdatedBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="LastUpdated" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UsersInRoles">
+          <Key>
+            <PropertyRef Name="UserRoles_Id" />
+            <PropertyRef Name="Users_Id" />
+          </Key>
+          <Property Name="UserRoles_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Users_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AvailableCourses_Courses">
+          <End Role="Courses" Type="Self.Courses" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AvailableCourses" Type="Self.AvailableCourses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AvailableCourses">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AvailableCourses_SchoolYears">
+          <End Role="SchoolYears" Type="Self.SchoolYears" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AvailableCourses" Type="Self.AvailableCourses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolYears">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AvailableCourses">
+              <PropertyRef Name="SchoolYearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AvailableMiscellaneous_AvailableCourses">
+          <End Role="AvailableCourses" Type="Self.AvailableCourses" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AvailableMiscellaneous" Type="Self.AvailableMiscellaneous" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AvailableCourses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AvailableMiscellaneous">
+              <PropertyRef Name="AvailableCourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AvailableMiscellaneous_Miscellaneous">
+          <End Role="Miscellaneous" Type="Self.Miscellaneous" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AvailableMiscellaneous" Type="Self.AvailableMiscellaneous" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Miscellaneous">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AvailableMiscellaneous">
+              <PropertyRef Name="MiscellaneousId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AvailableSubjects_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AvailableSubjects" Type="Self.AvailableSubjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AvailableSubjects">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AvailableSubjects_UserDetails">
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="0..1" />
+          <End Role="AvailableSubjects" Type="Self.AvailableSubjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AvailableSubjects">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Billings_Enrollments">
+          <End Role="Enrollments" Type="Self.Enrollments" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Billings" Type="Self.Billings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enrollments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Billings">
+              <PropertyRef Name="EnrollmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Credits_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Credits" Type="Self.Credits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Credits">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EnrolledSubject_AvailableSubjects">
+          <End Role="AvailableSubjects" Type="Self.AvailableSubjects" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EnrolledSubject" Type="Self.EnrolledSubject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AvailableSubjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EnrolledSubject">
+              <PropertyRef Name="AvailableSubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EnrolledSubject_Enrollments">
+          <End Role="Enrollments" Type="Self.Enrollments" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EnrolledSubject" Type="Self.EnrolledSubject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enrollments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EnrolledSubject">
+              <PropertyRef Name="EnrollmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enrollments_AvailableCourses">
+          <End Role="AvailableCourses" Type="Self.AvailableCourses" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Enrollments" Type="Self.Enrollments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AvailableCourses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Enrollments">
+              <PropertyRef Name="AvailableCourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enrollments_UserDetails">
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Enrollments" Type="Self.Enrollments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Enrollments">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Gradings_EnrolledSubject">
+          <End Role="EnrolledSubject" Type="Self.EnrolledSubject" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Grades" Type="Self.Grades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EnrolledSubject">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Grades">
+              <PropertyRef Name="EnrolledSubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Logs_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Logs">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedules_AvailableSubjects">
+          <End Role="AvailableSubjects" Type="Self.AvailableSubjects" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Schedules" Type="Self.Schedules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AvailableSubjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Schedules">
+              <PropertyRef Name="AvailableSubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SchoolYears_Semesters">
+          <End Role="Semesters" Type="Self.Semesters" Multiplicity="0..1" />
+          <End Role="SchoolYears" Type="Self.SchoolYears" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Semesters">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SchoolYears">
+              <PropertyRef Name="SemesterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Towns_Towns">
+          <End Role="Provinces" Type="Self.Provinces" Multiplicity="0..1" />
+          <End Role="Towns" Type="Self.Towns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provinces">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Towns">
+              <PropertyRef Name="ProvinceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserClaims_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserClaims" Type="Self.UserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetails_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLogins_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserLogins" Type="Self.UserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRolesInActions_UserRoles">
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserRolesInActions" Type="Self.UserRolesInActions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRolesInActions">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersInRoles_UserRoles">
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UsersInRoles" Type="Self.UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersInRoles">
+              <PropertyRef Name="UserRoles_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersInRoles_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UsersInRoles" Type="Self.UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersInRoles">
+              <PropertyRef Name="Users_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Actions" EntityType="Self.Actions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Announcements" EntityType="Self.Announcements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AvailableCourses" EntityType="Self.AvailableCourses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AvailableMiscellaneous" EntityType="Self.AvailableMiscellaneous" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AvailableSubjects" EntityType="Self.AvailableSubjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Billings" EntityType="Self.Billings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Credits" EntityType="Self.Credits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EnrolledSubject" EntityType="Self.EnrolledSubject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Enrollments" EntityType="Self.Enrollments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grades" EntityType="Self.Grades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Miscellaneous" EntityType="Self.Miscellaneous" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Provinces" EntityType="Self.Provinces" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Schedules" EntityType="Self.Schedules" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SchoolYears" EntityType="Self.SchoolYears" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sections" EntityType="Self.Sections" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Semesters" EntityType="Self.Semesters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Towns" EntityType="Self.Towns" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserClaims" EntityType="Self.UserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserLogins" EntityType="Self.UserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRolesInActions" EntityType="Self.UserRolesInActions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersInRoles" EntityType="Self.UsersInRoles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AvailableCourses_Courses" Association="Self.FK_AvailableCourses_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="AvailableCourses" EntitySet="AvailableCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AvailableCourses_SchoolYears" Association="Self.FK_AvailableCourses_SchoolYears">
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+            <End Role="AvailableCourses" EntitySet="AvailableCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AvailableMiscellaneous_AvailableCourses" Association="Self.FK_AvailableMiscellaneous_AvailableCourses">
+            <End Role="AvailableCourses" EntitySet="AvailableCourses" />
+            <End Role="AvailableMiscellaneous" EntitySet="AvailableMiscellaneous" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AvailableMiscellaneous_Miscellaneous" Association="Self.FK_AvailableMiscellaneous_Miscellaneous">
+            <End Role="Miscellaneous" EntitySet="Miscellaneous" />
+            <End Role="AvailableMiscellaneous" EntitySet="AvailableMiscellaneous" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AvailableSubjects_Subjects" Association="Self.FK_AvailableSubjects_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="AvailableSubjects" EntitySet="AvailableSubjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AvailableSubjects_UserDetails" Association="Self.FK_AvailableSubjects_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="AvailableSubjects" EntitySet="AvailableSubjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Billings_Enrollments" Association="Self.FK_Billings_Enrollments">
+            <End Role="Enrollments" EntitySet="Enrollments" />
+            <End Role="Billings" EntitySet="Billings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Credits_Users" Association="Self.FK_Credits_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Credits" EntitySet="Credits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EnrolledSubject_AvailableSubjects" Association="Self.FK_EnrolledSubject_AvailableSubjects">
+            <End Role="AvailableSubjects" EntitySet="AvailableSubjects" />
+            <End Role="EnrolledSubject" EntitySet="EnrolledSubject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EnrolledSubject_Enrollments" Association="Self.FK_EnrolledSubject_Enrollments">
+            <End Role="Enrollments" EntitySet="Enrollments" />
+            <End Role="EnrolledSubject" EntitySet="EnrolledSubject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enrollments_AvailableCourses" Association="Self.FK_Enrollments_AvailableCourses">
+            <End Role="AvailableCourses" EntitySet="AvailableCourses" />
+            <End Role="Enrollments" EntitySet="Enrollments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enrollments_UserDetails" Association="Self.FK_Enrollments_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="Enrollments" EntitySet="Enrollments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Gradings_EnrolledSubject" Association="Self.FK_Gradings_EnrolledSubject">
+            <End Role="EnrolledSubject" EntitySet="EnrolledSubject" />
+            <End Role="Grades" EntitySet="Grades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Logs_Users" Association="Self.FK_Logs_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Logs" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedules_AvailableSubjects" Association="Self.FK_Schedules_AvailableSubjects">
+            <End Role="AvailableSubjects" EntitySet="AvailableSubjects" />
+            <End Role="Schedules" EntitySet="Schedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SchoolYears_Semesters" Association="Self.FK_SchoolYears_Semesters">
+            <End Role="Semesters" EntitySet="Semesters" />
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Towns_Towns" Association="Self.FK_Towns_Towns">
+            <End Role="Provinces" EntitySet="Provinces" />
+            <End Role="Towns" EntitySet="Towns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClaims_Users" Association="Self.FK_UserClaims_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserClaims" EntitySet="UserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_Users" Association="Self.FK_UserDetails_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLogins_Users" Association="Self.FK_UserLogins_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserLogins" EntitySet="UserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRolesInActions_UserRoles" Association="Self.FK_UserRolesInActions_UserRoles">
+            <End Role="UserRoles" EntitySet="UserRoles" />
+            <End Role="UserRolesInActions" EntitySet="UserRolesInActions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersInRoles_UserRoles" Association="Self.FK_UsersInRoles_UserRoles">
+            <End Role="UserRoles" EntitySet="UserRoles" />
+            <End Role="UsersInRoles" EntitySet="UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersInRoles_Users" Association="Self.FK_UsersInRoles_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersInRoles" EntitySet="UsersInRoles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ModelDb" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Actions" EntityType="Model.Actions" />
+          <EntitySet Name="AvailableCourses" EntityType="Model.AvailableCourses" />
+          <EntitySet Name="Billings" EntityType="Model.Billings" />
+          <EntitySet Name="Courses" EntityType="Model.Courses" />
+          <EntitySet Name="Enrollments" EntityType="Model.Enrollments" />
+          <EntitySet Name="Logs" EntityType="Model.Logs" />
+          <EntitySet Name="Provinces" EntityType="Model.Provinces" />
+          <EntitySet Name="SchoolYears" EntityType="Model.SchoolYears" />
+          <EntitySet Name="Sections" EntityType="Model.Sections" />
+          <EntitySet Name="Semesters" EntityType="Model.Semesters" />
+          <EntitySet Name="sysdiagrams" EntityType="Model.sysdiagrams" />
+          <EntitySet Name="Towns" EntityType="Model.Towns" />
+          <EntitySet Name="UserClaims" EntityType="Model.UserClaims" />
+          <EntitySet Name="UserLogins" EntityType="Model.UserLogins" />
+          <EntitySet Name="UserRoles" EntityType="Model.UserRoles" />
+          <EntitySet Name="UserRolesInActions" EntityType="Model.UserRolesInActions" />
+          <EntitySet Name="Users" EntityType="Model.Users" />
+          <AssociationSet Name="FK_AvailableCourses_Courses" Association="Model.FK_AvailableCourses_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="AvailableCourses" EntitySet="AvailableCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AvailableCourses_SchoolYears" Association="Model.FK_AvailableCourses_SchoolYears">
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+            <End Role="AvailableCourses" EntitySet="AvailableCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enrollments_AvailableCourses" Association="Model.FK_Enrollments_AvailableCourses">
+            <End Role="AvailableCourses" EntitySet="AvailableCourses" />
+            <End Role="Enrollments" EntitySet="Enrollments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Billings_Enrollments" Association="Model.FK_Billings_Enrollments">
+            <End Role="Enrollments" EntitySet="Enrollments" />
+            <End Role="Billings" EntitySet="Billings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Logs_Users" Association="Model.FK_Logs_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Logs" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Towns_Towns" Association="Model.FK_Towns_Towns">
+            <End Role="Provinces" EntitySet="Provinces" />
+            <End Role="Towns" EntitySet="Towns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SchoolYears_Semesters" Association="Model.FK_SchoolYears_Semesters">
+            <End Role="Semesters" EntitySet="Semesters" />
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClaims_Users" Association="Model.FK_UserClaims_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserClaims" EntitySet="UserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLogins_Users" Association="Model.FK_UserLogins_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserLogins" EntitySet="UserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRolesInActions_UserRoles" Association="Model.FK_UserRolesInActions_UserRoles">
+            <End Role="UserRoles" EntitySet="UserRoles" />
+            <End Role="UserRolesInActions" EntitySet="UserRolesInActions" />
+          </AssociationSet>
+          <AssociationSet Name="UsersInRoles" Association="Model.UsersInRoles">
+            <End Role="UserRoles" EntitySet="UserRoles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="EnrolledSubject" EntityType="Model.EnrolledSubject" />
+          <AssociationSet Name="FK_EnrolledSubject_Enrollments" Association="Model.FK_EnrolledSubject_Enrollments">
+            <End Role="Enrollments" EntitySet="Enrollments" />
+            <End Role="EnrolledSubject" EntitySet="EnrolledSubject" />
+          </AssociationSet>
+          <EntitySet Name="Grades" EntityType="Model.Grades" />
+          <AssociationSet Name="FK_Gradings_EnrolledSubject" Association="Model.FK_Gradings_EnrolledSubject">
+            <End Role="EnrolledSubject" EntitySet="EnrolledSubject" />
+            <End Role="Grades" EntitySet="Grades" />
+          </AssociationSet>
+          <EntitySet Name="AvailableMiscellaneous" EntityType="Model.AvailableMiscellaneous" />
+          <EntitySet Name="Miscellaneous" EntityType="Model.Miscellaneous" />
+          <AssociationSet Name="FK_AvailableMiscellaneous_AvailableCourses" Association="Model.FK_AvailableMiscellaneous_AvailableCourses">
+            <End Role="AvailableCourses" EntitySet="AvailableCourses" />
+            <End Role="AvailableMiscellaneous" EntitySet="AvailableMiscellaneous" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AvailableMiscellaneous_Miscellaneous" Association="Model.FK_AvailableMiscellaneous_Miscellaneous">
+            <End Role="Miscellaneous" EntitySet="Miscellaneous" />
+            <End Role="AvailableMiscellaneous" EntitySet="AvailableMiscellaneous" />
+          </AssociationSet>
+          <EntitySet Name="Messages" EntityType="Model.Messages" />
+          <EntitySet Name="Announcements" EntityType="Model.Announcements" />
+          <EntitySet Name="AvailableSubjects" EntityType="Model.AvailableSubjects" />
+          <AssociationSet Name="FK_AvailableSubjects_AvailableCourses" Association="Model.FK_AvailableSubjects_AvailableCourses">
+            <End Role="AvailableCourses" EntitySet="AvailableCourses" />
+            <End Role="AvailableSubjects" EntitySet="AvailableSubjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EnrolledSubject_AvailableSubjects" Association="Model.FK_EnrolledSubject_AvailableSubjects">
+            <End Role="AvailableSubjects" EntitySet="AvailableSubjects" />
+            <End Role="EnrolledSubject" EntitySet="EnrolledSubject" />
+          </AssociationSet>
+          <EntitySet Name="Schedules" EntityType="Model.Schedules" />
+          <AssociationSet Name="FK_Schedules_AvailableSubjects" Association="Model.FK_Schedules_AvailableSubjects">
+            <End Role="AvailableSubjects" EntitySet="AvailableSubjects" />
+            <End Role="Schedules" EntitySet="Schedules" />
+          </AssociationSet>
+          <EntitySet Name="Credits" EntityType="Model.Credits" />
+          <AssociationSet Name="FK_Credits_Users" Association="Model.FK_Credits_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Credits" EntitySet="Credits" />
+          </AssociationSet>
+          <EntitySet Name="Subjects" EntityType="Model.Subjects" />
+          <AssociationSet Name="FK_AvailableSubjects_Subjects" Association="Model.FK_AvailableSubjects_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="AvailableSubjects" EntitySet="AvailableSubjects" />
+          </AssociationSet>
+          <EntitySet Name="UserDetails" EntityType="Model.UserDetails" />
+          <AssociationSet Name="FK_AvailableSubjects_UserDetails" Association="Model.FK_AvailableSubjects_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="AvailableSubjects" EntitySet="AvailableSubjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enrollments_UserDetails" Association="Model.FK_Enrollments_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="Enrollments" EntitySet="Enrollments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_Users" Association="Model.FK_UserDetails_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Actions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Action" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AvailableCourses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseId" Type="Int32" />
+          <Property Name="SchoolYearId" Type="Int32" />
+          <NavigationProperty Name="Courses" Relationship="Model.FK_AvailableCourses_Courses" FromRole="AvailableCourses" ToRole="Courses" />
+          <NavigationProperty Name="SchoolYears" Relationship="Model.FK_AvailableCourses_SchoolYears" FromRole="AvailableCourses" ToRole="SchoolYears" />
+          <NavigationProperty Name="Enrollments" Relationship="Model.FK_Enrollments_AvailableCourses" FromRole="AvailableCourses" ToRole="Enrollments" />
+          <NavigationProperty Name="AvailableMiscellaneous" Relationship="Model.FK_AvailableMiscellaneous_AvailableCourses" FromRole="AvailableCourses" ToRole="AvailableMiscellaneous" />
+          <NavigationProperty Name="AvailableSubjects" Relationship="Model.FK_AvailableSubjects_AvailableCourses" FromRole="AvailableCourses" ToRole="AvailableSubjects" />
+        </EntityType>
+        <EntityType Name="Billings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EnrollmentId" Type="Int32" />
+          <Property Name="OfficialReceipt" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Type" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Enrollments" Relationship="Model.FK_Billings_Enrollments" FromRole="Billings" ToRole="Enrollments" />
+        </EntityType>
+        <EntityType Name="Courses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Course" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AvailableCourses" Relationship="Model.FK_AvailableCourses_Courses" FromRole="Courses" ToRole="AvailableCourses" />
+          <Property Name="CourseCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Enrollments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="AvailableCourseId" Type="Int32" />
+          <Property Name="IsDrop" Type="Boolean" />
+          <NavigationProperty Name="AvailableCourses" Relationship="Model.FK_Enrollments_AvailableCourses" FromRole="Enrollments" ToRole="AvailableCourses" />
+          <NavigationProperty Name="Billings" Relationship="Model.FK_Billings_Enrollments" FromRole="Enrollments" ToRole="Billings" />
+          <NavigationProperty Name="EnrolledSubject" Relationship="Model.FK_EnrolledSubject_Enrollments" FromRole="Enrollments" ToRole="EnrolledSubject" />
+          <NavigationProperty Name="UserDetails" Relationship="Model.FK_Enrollments_UserDetails" FromRole="Enrollments" ToRole="UserDetails" />
+        </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TableName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OldValues" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewValues" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="Action" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Model.FK_Logs_Users" FromRole="Logs" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Provinces">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SortOrder" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Towns" Relationship="Model.FK_Towns_Towns" FromRole="Provinces" ToRole="Towns" />
+        </EntityType>
+        <EntityType Name="SchoolYears">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SchoolYear" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SemesterId" Type="Int32" />
+          <NavigationProperty Name="AvailableCourses" Relationship="Model.FK_AvailableCourses_SchoolYears" FromRole="SchoolYears" ToRole="AvailableCourses" />
+          <NavigationProperty Name="Semesters" Relationship="Model.FK_SchoolYears_Semesters" FromRole="SchoolYears" ToRole="Semesters" />
+          <Property Name="StartDate" Type="DateTime" Precision="7" />
+          <Property Name="EndDate" Type="DateTime" Precision="7" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Sections">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Section" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Semesters">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Semester" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SchoolYears" Relationship="Model.FK_SchoolYears_Semesters" FromRole="Semesters" ToRole="SchoolYears" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Towns">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProvinceId" Type="Int32" />
+          <Property Name="SortOrder" Type="Int32" />
+          <NavigationProperty Name="Provinces" Relationship="Model.FK_Towns_Towns" FromRole="Towns" ToRole="Provinces" />
+        </EntityType>
+        <EntityType Name="UserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Model.FK_UserClaims_Users" FromRole="UserClaims" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="UserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Model.FK_UserLogins_Users" FromRole="UserLogins" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserRolesInActions" Relationship="Model.FK_UserRolesInActions_UserRoles" FromRole="UserRoles" ToRole="UserRolesInActions" />
+          <NavigationProperty Name="Users" Relationship="Model.UsersInRoles" FromRole="UserRoles" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="UserRolesInActions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Action" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserRoles" Relationship="Model.FK_UserRolesInActions_UserRoles" FromRole="UserRolesInActions" ToRole="UserRoles" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="BiometricId" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" />
+          <Property Name="AccessFailedCount" Type="Int32" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdatedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Logs" Relationship="Model.FK_Logs_Users" FromRole="Users" ToRole="Logs" />
+          <NavigationProperty Name="UserClaims" Relationship="Model.FK_UserClaims_Users" FromRole="Users" ToRole="UserClaims" />
+          <NavigationProperty Name="UserLogins" Relationship="Model.FK_UserLogins_Users" FromRole="Users" ToRole="UserLogins" />
+          <NavigationProperty Name="UserRoles" Relationship="Model.UsersInRoles" FromRole="Users" ToRole="UserRoles" />
+          <NavigationProperty Name="Credits" Relationship="Model.FK_Credits_Users" FromRole="Users" ToRole="Credits" />
+          <NavigationProperty Name="UserDetails" Relationship="Model.FK_UserDetails_Users" FromRole="Users" ToRole="UserDetails" />
+        </EntityType>
+        <Association Name="FK_AvailableCourses_Courses">
+          <End Type="Model.Courses" Role="Courses" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.AvailableCourses" Role="AvailableCourses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AvailableCourses">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AvailableCourses_SchoolYears">
+          <End Type="Model.SchoolYears" Role="SchoolYears" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.AvailableCourses" Role="AvailableCourses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolYears">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AvailableCourses">
+              <PropertyRef Name="SchoolYearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enrollments_AvailableCourses">
+          <End Type="Model.AvailableCourses" Role="AvailableCourses" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Enrollments" Role="Enrollments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AvailableCourses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Enrollments">
+              <PropertyRef Name="AvailableCourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Billings_Enrollments">
+          <End Type="Model.Enrollments" Role="Enrollments" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Billings" Role="Billings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enrollments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Billings">
+              <PropertyRef Name="EnrollmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Logs_Users">
+          <End Type="Model.Users" Role="Users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Logs" Role="Logs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Logs">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Towns_Towns">
+          <End Type="Model.Provinces" Role="Provinces" Multiplicity="0..1" />
+          <End Type="Model.Towns" Role="Towns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provinces">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Towns">
+              <PropertyRef Name="ProvinceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SchoolYears_Semesters">
+          <End Type="Model.Semesters" Role="Semesters" Multiplicity="0..1" />
+          <End Type="Model.SchoolYears" Role="SchoolYears" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Semesters">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SchoolYears">
+              <PropertyRef Name="SemesterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserClaims_Users">
+          <End Type="Model.Users" Role="Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.UserClaims" Role="UserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLogins_Users">
+          <End Type="Model.Users" Role="Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.UserLogins" Role="UserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRolesInActions_UserRoles">
+          <End Type="Model.UserRoles" Role="UserRoles" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.UserRolesInActions" Role="UserRolesInActions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRolesInActions">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsersInRoles">
+          <End Type="Model.UserRoles" Role="UserRoles" Multiplicity="*" />
+          <End Type="Model.Users" Role="Users" Multiplicity="*" />
+        </Association>
+        <EntityType Name="EnrolledSubject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EnrollmentId" Type="Int32" />
+          <Property Name="AvailableSubjectId" Type="Int32" />
+          <NavigationProperty Name="Enrollments" Relationship="Model.FK_EnrolledSubject_Enrollments" FromRole="EnrolledSubject" ToRole="Enrollments" />
+          <NavigationProperty Name="Grades" Relationship="Model.FK_Gradings_EnrolledSubject" FromRole="EnrolledSubject" ToRole="Grades" />
+          <NavigationProperty Name="AvailableSubjects" Relationship="Model.FK_EnrolledSubject_AvailableSubjects" FromRole="EnrolledSubject" ToRole="AvailableSubjects" />
+        </EntityType>
+        <Association Name="FK_EnrolledSubject_Enrollments">
+          <End Type="Model.Enrollments" Role="Enrollments" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.EnrolledSubject" Role="EnrolledSubject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enrollments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EnrolledSubject">
+              <PropertyRef Name="EnrollmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Grades">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EnrolledSubjectId" Type="Int32" />
+          <Property Name="Prelim" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MidTerm" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="FinalTerm" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="EnrolledSubject" Relationship="Model.FK_Gradings_EnrolledSubject" FromRole="Grades" ToRole="EnrolledSubject" />
+        </EntityType>
+        <Association Name="FK_Gradings_EnrolledSubject">
+          <End Type="Model.EnrolledSubject" Role="EnrolledSubject" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Grades" Role="Grades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EnrolledSubject">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Grades">
+              <PropertyRef Name="EnrolledSubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AvailableMiscellaneous">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AvailableCourseId" Type="Int32" />
+          <Property Name="MiscellaneousId" Type="Int32" />
+          <NavigationProperty Name="AvailableCourses" Relationship="Model.FK_AvailableMiscellaneous_AvailableCourses" FromRole="AvailableMiscellaneous" ToRole="AvailableCourses" />
+          <NavigationProperty Name="Miscellaneous" Relationship="Model.FK_AvailableMiscellaneous_Miscellaneous" FromRole="AvailableMiscellaneous" ToRole="Miscellaneous" />
+        </EntityType>
+        <EntityType Name="Miscellaneous">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MiscellaneousName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="AvailableMiscellaneous" Relationship="Model.FK_AvailableMiscellaneous_Miscellaneous" FromRole="Miscellaneous" ToRole="AvailableMiscellaneous" />
+        </EntityType>
+        <Association Name="FK_AvailableMiscellaneous_AvailableCourses">
+          <End Type="Model.AvailableCourses" Role="AvailableCourses" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.AvailableMiscellaneous" Role="AvailableMiscellaneous" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AvailableCourses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AvailableMiscellaneous">
+              <PropertyRef Name="AvailableCourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AvailableMiscellaneous_Miscellaneous">
+          <End Type="Model.Miscellaneous" Role="Miscellaneous" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.AvailableMiscellaneous" Role="AvailableMiscellaneous" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Miscellaneous">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AvailableMiscellaneous">
+              <PropertyRef Name="MiscellaneousId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MessageFrom" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="MessageTo" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Subject" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Files" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MimeType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ExtensionName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="7" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Announcements">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Announcement" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="AvailableSubjects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubjectId" Type="Int32" />
+          <Property Name="AvailableCourseId" Type="Int32" />
+          <Property Name="SubjectCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="TeacherId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Schedule" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AvailableCourses" Relationship="Model.FK_AvailableSubjects_AvailableCourses" FromRole="AvailableSubjects" ToRole="AvailableCourses" />
+          <NavigationProperty Name="EnrolledSubject" Relationship="Model.FK_EnrolledSubject_AvailableSubjects" FromRole="AvailableSubjects" ToRole="EnrolledSubject" />
+          <NavigationProperty Name="Schedules" Relationship="Model.FK_Schedules_AvailableSubjects" FromRole="AvailableSubjects" ToRole="Schedules" />
+          <NavigationProperty Name="Subjects" Relationship="Model.FK_AvailableSubjects_Subjects" FromRole="AvailableSubjects" ToRole="Subjects" />
+          <NavigationProperty Name="UserDetails" Relationship="Model.FK_AvailableSubjects_UserDetails" FromRole="AvailableSubjects" ToRole="UserDetails" />
+        </EntityType>
+        <Association Name="FK_AvailableSubjects_AvailableCourses">
+          <End Type="Model.AvailableCourses" Role="AvailableCourses" Multiplicity="0..1" />
+          <End Type="Model.AvailableSubjects" Role="AvailableSubjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AvailableCourses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AvailableSubjects">
+              <PropertyRef Name="AvailableCourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EnrolledSubject_AvailableSubjects">
+          <End Type="Model.AvailableSubjects" Role="AvailableSubjects" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.EnrolledSubject" Role="EnrolledSubject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AvailableSubjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EnrolledSubject">
+              <PropertyRef Name="AvailableSubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Schedules">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AvailableSubjectId" Type="Int32" Nullable="false" />
+          <Property Name="TimeIn" Type="DateTime" Precision="7" />
+          <Property Name="TimeOut" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="AvailableSubjects" Relationship="Model.FK_Schedules_AvailableSubjects" FromRole="Schedules" ToRole="AvailableSubjects" />
+        </EntityType>
+        <Association Name="FK_Schedules_AvailableSubjects">
+          <End Type="Model.AvailableSubjects" Role="AvailableSubjects" Multiplicity="1" />
+          <End Type="Model.Schedules" Role="Schedules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AvailableSubjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Schedules">
+              <PropertyRef Name="AvailableSubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Credits">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Credit" Type="Int32" Nullable="false" />
+          <Property Name="AmountPaid" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="DatePaid" Type="DateTime" Precision="7" />
+          <Property Name="PayBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PayId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Model.FK_Credits_Users" FromRole="Credits" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_Credits_Users">
+          <End Type="Model.Users" Role="Users" Multiplicity="1" />
+          <End Type="Model.Credits" Role="Credits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Credits">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Subject" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptiveTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="Int32" />
+          <NavigationProperty Name="AvailableSubjects" Relationship="Model.FK_AvailableSubjects_Subjects" FromRole="Subjects" ToRole="AvailableSubjects" />
+        </EntityType>
+        <Association Name="FK_AvailableSubjects_Subjects">
+          <End Type="Model.Subjects" Role="Subjects" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.AvailableSubjects" Role="AvailableSubjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AvailableSubjects">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AvailableSubjects" Relationship="Model.FK_AvailableSubjects_UserDetails" FromRole="UserDetails" ToRole="AvailableSubjects" />
+          <NavigationProperty Name="Enrollments" Relationship="Model.FK_Enrollments_UserDetails" FromRole="UserDetails" ToRole="Enrollments" />
+          <NavigationProperty Name="Users" Relationship="Model.FK_UserDetails_Users" FromRole="UserDetails" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_AvailableSubjects_UserDetails">
+          <End Type="Model.UserDetails" Role="UserDetails" Multiplicity="0..1" />
+          <End Type="Model.AvailableSubjects" Role="AvailableSubjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AvailableSubjects">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enrollments_UserDetails">
+          <End Type="Model.UserDetails" Role="UserDetails" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Enrollments" Role="Enrollments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Enrollments">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetails_Users">
+          <End Type="Model.Users" Role="Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.UserDetails" Role="UserDetails" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="ModelDb">
+          <EntitySetMapping Name="Actions">
+            <EntityTypeMapping TypeName="Model.Actions">
+              <MappingFragment StoreEntitySet="Actions">
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AvailableCourses">
+            <EntityTypeMapping TypeName="Model.AvailableCourses">
+              <MappingFragment StoreEntitySet="AvailableCourses">
+                <ScalarProperty Name="SchoolYearId" ColumnName="SchoolYearId" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Billings">
+            <EntityTypeMapping TypeName="Model.Billings">
+              <MappingFragment StoreEntitySet="Billings">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="OfficialReceipt" ColumnName="OfficialReceipt" />
+                <ScalarProperty Name="EnrollmentId" ColumnName="EnrollmentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="Model.Courses">
+              <MappingFragment StoreEntitySet="Courses">
+                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
+                <ScalarProperty Name="Course" ColumnName="Course" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Enrollments">
+            <EntityTypeMapping TypeName="Model.Enrollments">
+              <MappingFragment StoreEntitySet="Enrollments">
+                <ScalarProperty Name="IsDrop" ColumnName="IsDrop" />
+                <ScalarProperty Name="AvailableCourseId" ColumnName="AvailableCourseId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="Model.Logs">
+              <MappingFragment StoreEntitySet="Logs">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="NewValues" ColumnName="NewValues" />
+                <ScalarProperty Name="OldValues" ColumnName="OldValues" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Provinces">
+            <EntityTypeMapping TypeName="Model.Provinces">
+              <MappingFragment StoreEntitySet="Provinces">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SchoolYears">
+            <EntityTypeMapping TypeName="Model.SchoolYears">
+              <MappingFragment StoreEntitySet="SchoolYears">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="SemesterId" ColumnName="SemesterId" />
+                <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sections">
+            <EntityTypeMapping TypeName="Model.Sections">
+              <MappingFragment StoreEntitySet="Sections">
+                <ScalarProperty Name="Section" ColumnName="Section" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Semesters">
+            <EntityTypeMapping TypeName="Model.Semesters">
+              <MappingFragment StoreEntitySet="Semesters">
+                <ScalarProperty Name="Semester" ColumnName="Semester" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Towns">
+            <EntityTypeMapping TypeName="Model.Towns">
+              <MappingFragment StoreEntitySet="Towns">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserClaims">
+            <EntityTypeMapping TypeName="Model.UserClaims">
+              <MappingFragment StoreEntitySet="UserClaims">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLogins">
+            <EntityTypeMapping TypeName="Model.UserLogins">
+              <MappingFragment StoreEntitySet="UserLogins">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="Model.UserRoles">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRolesInActions">
+            <EntityTypeMapping TypeName="Model.UserRolesInActions">
+              <MappingFragment StoreEntitySet="UserRolesInActions">
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Model.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="BiometricId" ColumnName="BiometricId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="UsersInRoles" TypeName="Model.UsersInRoles" StoreEntitySet="UsersInRoles">
+            <EndProperty Name="Users">
+              <ScalarProperty Name="Id" ColumnName="Users_Id" />
+            </EndProperty>
+            <EndProperty Name="UserRoles">
+              <ScalarProperty Name="Id" ColumnName="UserRoles_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="EnrolledSubject">
+            <EntityTypeMapping TypeName="Model.EnrolledSubject">
+              <MappingFragment StoreEntitySet="EnrolledSubject">
+                <ScalarProperty Name="AvailableSubjectId" ColumnName="AvailableSubjectId" />
+                <ScalarProperty Name="EnrollmentId" ColumnName="EnrollmentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grades">
+            <EntityTypeMapping TypeName="Model.Grades">
+              <MappingFragment StoreEntitySet="Grades">
+                <ScalarProperty Name="FinalTerm" ColumnName="FinalTerm" />
+                <ScalarProperty Name="MidTerm" ColumnName="MidTerm" />
+                <ScalarProperty Name="Prelim" ColumnName="Prelim" />
+                <ScalarProperty Name="EnrolledSubjectId" ColumnName="EnrolledSubjectId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AvailableMiscellaneous">
+            <EntityTypeMapping TypeName="Model.AvailableMiscellaneous">
+              <MappingFragment StoreEntitySet="AvailableMiscellaneous">
+                <ScalarProperty Name="MiscellaneousId" ColumnName="MiscellaneousId" />
+                <ScalarProperty Name="AvailableCourseId" ColumnName="AvailableCourseId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Miscellaneous">
+            <EntityTypeMapping TypeName="Model.Miscellaneous">
+              <MappingFragment StoreEntitySet="Miscellaneous">
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="MiscellaneousName" ColumnName="MiscellaneousName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="Model.Messages">
+              <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ExtensionName" ColumnName="ExtensionName" />
+                <ScalarProperty Name="MimeType" ColumnName="MimeType" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Files" ColumnName="Files" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="MessageTo" ColumnName="MessageTo" />
+                <ScalarProperty Name="MessageFrom" ColumnName="MessageFrom" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Announcements">
+            <EntityTypeMapping TypeName="Model.Announcements">
+              <MappingFragment StoreEntitySet="Announcements">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Announcement" ColumnName="Announcement" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AvailableSubjects">
+            <EntityTypeMapping TypeName="Model.AvailableSubjects">
+              <MappingFragment StoreEntitySet="AvailableSubjects">
+                <ScalarProperty Name="Schedule" ColumnName="Schedule" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="SubjectCode" ColumnName="SubjectCode" />
+                <ScalarProperty Name="AvailableCourseId" ColumnName="AvailableCourseId" />
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schedules">
+            <EntityTypeMapping TypeName="Model.Schedules">
+              <MappingFragment StoreEntitySet="Schedules">
+                <ScalarProperty Name="TimeOut" ColumnName="TimeOut" />
+                <ScalarProperty Name="TimeIn" ColumnName="TimeIn" />
+                <ScalarProperty Name="AvailableSubjectId" ColumnName="AvailableSubjectId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Credits">
+            <EntityTypeMapping TypeName="Model.Credits">
+              <MappingFragment StoreEntitySet="Credits">
+                <ScalarProperty Name="PayId" ColumnName="PayId" />
+                <ScalarProperty Name="PayBy" ColumnName="PayBy" />
+                <ScalarProperty Name="DatePaid" ColumnName="DatePaid" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="AmountPaid" ColumnName="AmountPaid" />
+                <ScalarProperty Name="Credit" ColumnName="Credit" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="Model.Subjects">
+              <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="DescriptiveTitle" ColumnName="DescriptiveTitle" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDetails">
+            <EntityTypeMapping TypeName="Model.UserDetails">
+              <MappingFragment StoreEntitySet="UserDetails">
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

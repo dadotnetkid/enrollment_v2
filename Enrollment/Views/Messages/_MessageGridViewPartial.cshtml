@@ -1,0 +1,119 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Width = Unit.Percentage(100);
+        settings.Name = "MessageGridView";
+        settings.CallbackRouteValues = new { Controller = "Messages", Action = "MessageGridViewPartial", mode = ViewBag.Mode };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Messages", Action = "MessageGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Messages", Action = "MessageGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Messages", Action = "MessageGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.AddAddEditDeleteToolbar(false, false, false);
+        settings.SettingsBehavior.AllowFocusedRow = true;
+        settings.KeyFieldName = "Id";
+
+//     settings.ClientSideEvents.EndCallback = "function(s,e){message()}";
+settings.ClientSideEvents.RowDblClick = "function(s,e){GridSelectionChanged(s,e);}";
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Settings.ShowColumnHeaders = false;
+        settings.ControlStyle.Border.BorderStyle = BorderStyle.None;
+        settings.Settings.GridLines = GridLines.None;
+        settings.Styles.CommandColumn.Border.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
+        settings.CommandButtonInitialize = (s, e) =>
+        {
+    //var _grid = s as MVCxGridView;
+    //var val = _grid.GetRow(e.VisibleIndex) as Messages;
+    //var col = _grid.Columns;
+
+    //if (val?.Status != true)
+    //{
+    //    var x = _grid.(e.VisibleIndex) ;
+
+    //}
+    //e.Column.Columns[0].CellStyle.Font.Bold= true;
+};
+
+
+
+        settings.HtmlRowPrepared = (s, e) =>
+        {
+            var _grid = s as MVCxGridView;
+            var val = _grid.GetRow(e.VisibleIndex) as Messages;
+            if (val?.Status != true)
+                e.Row.Style.Add("font-weight", "900");
+        };
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "Id";
+            col.Caption = "";
+            col.Visible = false;
+        });
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "_MessageFrom";
+            col.Caption = "";
+
+        });
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "Subject";
+            col.Caption = "";
+
+        });
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "DateCreated";
+            col.PropertiesEdit.DisplayFormatString = "MMM dd";
+            col.Caption = "";
+        });
+        settings.SetEditFormTemplateContent(col =>
+        {
+
+            Html.DevExpress().PopupControl(pop =>
+            {
+                pop.HeaderText = (DataBinder.Eval(col.DataItem, "Subject") ?? "New Message").ToString();
+                pop.Width = Unit.Pixel(700);
+                pop.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+                pop.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+                pop.Name = col.KeyValue + "_popup";
+                pop.Modal = true;
+                pop.ShowOnPageLoad = true;
+                pop.CloseOnEscape = false;
+                pop.ShowCloseButton = true;
+                pop.ClientSideEvents.CloseUp = "function(s,e){MessageGridView.CancelEdit();        }";
+                pop.CloseAction = CloseAction.CloseButton;
+                pop.SetContent(() =>
+                {
+
+                    Html.RenderAction("AddEditMessagePartial", new { messageId = col.KeyValue });
+
+                });
+            }).GetHtml();
+
+
+
+
+        });
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

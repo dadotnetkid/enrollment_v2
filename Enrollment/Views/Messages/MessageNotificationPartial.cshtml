@@ -1,0 +1,46 @@
+﻿@using StringExtensions = Helpers.StringExtensions
+@model IQueryable<Messages>
+@{
+    var unitOfWork = new UnitOfWork();
+}
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    <i class="fa fa-envelope-o"></i>
+    <span class="label label-success">
+        @(
+            Model.Count(m => m.Status != true)
+        )
+    </span>
+</a>
+<ul class="dropdown-menu">
+    <li class="header">You have @(Model.Count(m => m.Status != true)) messages</li>
+    <li>
+        <!-- inner menu: contains the actual data -->
+        <ul class="menu">
+            @foreach (var i in Model.Where(m => m.Status != true).OrderByDescending(m => m.Id))
+            {
+                var from = unitOfWork.EmployeesRepo.Find(m => m.Id == i.MessageFrom);
+                <li>
+                    <!-- start message -->
+                    <a href="#" onclick="viewMessage(@i.Id)">
+                        <div class="pull-left">
+                            <img src="@StringExtensions.ImageToBase64(from.Picture)" class="img-circle" alt="User Image">
+                        </div>
+                        <h4>
+                            @i._MessageFrom
+                            <small><i class="fa fa-clock-o"></i> @((DateTime.Now - i.DateCreated)?.Minutes) min</small>
+                        </h4>
+                        <p>@i.Subject</p>
+                    </a>
+                </li>
+
+            }
+
+            <!-- end message -->
+
+
+        </ul>
+    </li>
+    <li class="footer"><a href="@Url.Action("index","messages")">See All Messages</a></li>
+</ul>
+
+<div id="container-popup"></div>

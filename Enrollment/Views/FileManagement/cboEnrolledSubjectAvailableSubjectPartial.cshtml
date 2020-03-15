@@ -1,0 +1,13 @@
+﻿@{
+    Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "AvailableSubjectId";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.Caption = "Subjects";
+        settings.Properties.ValueField = "Id";
+        settings.Properties.TextField = "SubjectCode";
+        settings.CallbackRouteValues = new { controller = "FileManagement", Action = "CboEnrolledSubjectAvailableSubjectPartial" };
+    })
+        .BindList(Model)
+        .GetHtml();
+}

@@ -1,0 +1,78 @@
+﻿@{
+    string studentId = ViewBag.StudentId ?? "";
+}
+@Html.DevExpress().PageControl(settings =>
+{
+    settings.Name = "StudentProfileTabPartials";
+    settings.Width = Unit.Percentage(100);
+    settings.CallbackRouteValues = new {Controller="Profile",Action="StudentProfileTabPartials"};
+    settings.ClientSideEvents.ActiveTabChanged = "function(s,e){s.PerformCallback()}";
+    settings.TabPages.Add(tab =>
+    {
+        tab.Name = "Profile";
+        tab.Text = "Profile";
+        tab.SetContent(() =>
+        {
+            ViewContext.Writer.Write("<div id='student-profile'>");
+            using (Ajax.BeginForm(new AjaxOptions()
+            {
+                Url = Url.Action("StudentsGridViewPartialUpdate"),
+                HttpMethod="POST",
+                UpdateTargetId = "student-profile"
+            }))
+            {
+                Html.RenderAction("AddEditStudentPartial");
+            }
+            ViewContext.Writer.Write("</div>");
+        });
+    });
+
+    /*settings.TabPages.Add(tab =>
+    {
+        tab.Name = "Enrollment";
+        tab.Text = "Enrollment";
+        tab.Visible = new UnitOfWork().UserDetailsRepo.Fetch(m => m.Id == studentId).Any();
+        tab.SetContent(() =>
+        {
+
+            Html.RenderAction("EnrollmentsGridViewPartial", new { studentId = ViewBag.StudentId });
+
+        });
+    });
+    settings.TabPages.Add(tab =>
+    {
+        tab.Name = "Enrolled Subject";
+        tab.Text = "Enrolled Subject";
+        tab.Visible = new UnitOfWork().UserDetailsRepo.Fetch(m => m.Id == studentId).Any();
+        tab.SetContent(() =>
+        {
+
+            Html.RenderAction("EnrolledSubjectsGridViewPartial",new { studentId = ViewBag.StudentId });
+
+        });
+    });*/
+    settings.TabPages.Add(tab =>
+    {
+        tab.Name = "Grades";
+        tab.Text = "Grades";
+        tab.Visible = new UnitOfWork().UserDetailsRepo.Fetch(m => m.Id == studentId).Any();
+        tab.SetContent(() =>
+        {
+
+            @Html.RenderAction("GradesGridViewPartial");
+
+        });
+    });
+    settings.TabPages.Add(tab =>
+    {
+        tab.Name = "Billings";
+        tab.Text = "Billings";
+        tab.Visible = new UnitOfWork().UserDetailsRepo.Fetch(m => m.Id == studentId).Any();
+        tab.SetContent(() =>
+        {
+
+            @Html.RenderAction("BillingsGridViewPartial", new {studentId = ViewBag.StudentId});
+
+        });
+    });
+}).GetHtml()

@@ -1,0 +1,14 @@
+@model Messages
+    @Html.DevExpress().HtmlEditor(settings => {
+        settings.Name = "Message";
+        settings.CallbackRouteValues = new { Controller = "Messages", Action = "HtmlEditorPartial" };
+        settings.Width = Unit.Percentage(100);
+        settings.ToolbarMode = HtmlEditorToolbarMode.Menu;
+
+            settings.SettingsDialogs.InsertImageDialog.SettingsImageUpload.UploadCallbackRouteValues = new { Controller = "Messages", Action = "HtmlEditorPartialImageUpload" };
+        settings.SettingsDialogs.InsertImageDialog.SettingsImageUpload.UploadFolder = MessagesControllerHtmlEditorSettings.ImageUploadDirectory;
+        settings.SettingsDialogs.InsertImageDialog.SettingsImageUpload.ValidationSettings.Assign(MessagesControllerHtmlEditorSettings.ImageUploadValidationSettings);
+
+
+                settings.SettingsDialogs.InsertImageDialog.SettingsImageSelector.Assign(MessagesControllerHtmlEditorSettings.ImageSelectorSettings);
+        }).Bind(Model?.Message).GetHtml()

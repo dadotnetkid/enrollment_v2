@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+
+
+@using (Html.BeginForm("register","member",FormMethod.Post,new { id="form-register"}))
+{
+    Html.DevExpress().TabControl(settings =>
+    {
+        settings.Width = Unit.Percentage(100);
+        settings.Name = "pageControlMemberType";
+        settings.Tabs.Add("Individual", "tbIndividual");
+        settings.Tabs.Add("Company", "tbCompany");
+        settings.ClientSideEvents.ActiveTabChanged = "function(s,e){tabChanged(s,e)}";
+    }).GetHtml();
+    <div id="container">
+        @Html.Partial("registerPartial", new RegisterViewModel() { RegistrationType = RegistrationType.Individual })
+    </div>
+}
+
+<script>
+    function getTabText() {
+        var tab = pageControlMemberType.tabs[pageControlMemberType.activeTabIndex].GetText();
+
+        return tab;
+    }
+
+    console.log(getTabText());
+
+    function tabChanged(s, e) {
+        var registrationType = 0;
+        if (getTabText() == "Individual") {
+            registrationType = 1;
+        }
+        $.ajax({
+            url: "@Url.Action("registerpartial")" + "?RegistrationType=" + registrationType,
+            datatype: 'POST',
+            success: function(obj) {
+                $('#container').html(obj);
+            }
+        });
+    }
+
+</script>

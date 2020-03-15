@@ -1,0 +1,70 @@
+﻿
+@model Billings
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().ComboBox(settings =>
+            {
+                settings.Name = "StudentId";
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "Students";
+                settings.Properties.TextField = "Fullname";
+                settings.Properties.ValueField = "Id";
+                settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){EnrollmentId.PerformCallback({StudentId:StudentId.GetValue()})}";
+            }).BindList(new UnitOfWork().UserDetailsRepo.Get(m => m.Users.UserRoles.Any(x => x.Name == "Student"))).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+
+        @{
+            Html.RenderAction("CboEnrollmentPartials");
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.OfficialReceipt, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "OfficialReceipt";
+
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().SpinEditFor(m => m.Amount, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "Amount";
+
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row margin-top-10">
+    <div class="col-lg-12 col-md-12 ">
+        @{
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "BillingsGridViewbtnSubmit";
+                settings.Text = "Submit";
+                settings.ClientSideEvents.Click = "function(s,e){BillingsGridView.UpdateEdit()}";
+
+            }).GetHtml();
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "BillingsGridViewbtnCancel";
+                settings.Text = "Cancel";
+                settings.ControlStyle.CssClass = "margin-left-10";
+                settings.ClientSideEvents.Click = "function(s,e){BillingsGridView.CancelEdit()}";
+            }).GetHtml();
+        }
+    </div>
+</div>

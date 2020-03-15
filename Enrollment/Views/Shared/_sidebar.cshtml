@@ -1,0 +1,230 @@
+﻿@using Enrollment.Controllers
+@using Helpers
+@*<p>@ViewContext.RouteData.Values["Controller"].ToString()</p>*@
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <ul class="sidebar-menu" data-widget="tree">
+            <li class="header">MAIN NAVIGATION</li>
+            <li class="@(ControllerHelpers.IsMenuBarActive("Index", "Home") ? "active" : "")">
+                <a href="@Url.Action("Index", "Home")"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+            </li>
+            <li class="@(ControllerHelpers.IsMenuBarActive("Index", "Messages") ? "active" : "")">
+                <a href="@Url.Action("Index", "Messages")"><i class="fa fa-mail-reply-all"></i> <span>Messages</span></a>
+            </li>
+
+            @if (User.UserInAction("profile"))
+            {
+
+                <li class="@(ControllerHelpers.IsMenuBarActive("Index", "profile") ? "active" : "")">
+                    <a href="@Url.Action("Index", "profile")"><i class="fa fa-graduation-cap"></i> <span>profile</span></a>
+                </li>
+            }
+
+            @if (User.IsInRole("Student"))
+            {
+
+                <li class="@(ControllerHelpers.IsMenuBarActive("Index", "schedules") ? "active" : "")">
+                    <a href="@Url.Action("Index", "schedules",new { studentId=User.Identity.GetUserId()})"><i class="fa fa-calendar"></i> <span>Student Schedules</span></a>
+                </li>
+            }
+            @if (User.UserInAction("Teacher Schedule"))
+            {
+
+                <li class="@(ControllerHelpers.IsMenuBarActive("Index", "teacherschedules") ? "active" : "")">
+                    <a href="@Url.Action("Index", "teacherschedules")"><i class="fa fa-calendar"></i> <span>Teacher Schedules</span></a>
+                </li>
+            }
+            @*<li class="@("treeview " + (ControllerHelpers.IsControllerName("transactions")  ? "menu-open active" : ""))">
+                    <a href="">
+                        <i class="fa fa-book"></i> <span>Transactions</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="@(ControllerHelpers.IsMenuBarActive("Index", "transactions") ?"active":"")">
+                            <a href="@Url.Action("Index", "transactions")"><i class="fa fa-list"></i> <span>Transactions List</span></a>
+                        </li>
+                    <li class="@(ControllerHelpers.IsMenuBarActive("Productions", "transactions")?"active":"")">
+                            <a href="@Url.Action("Productions", "transactions")"><i class="fa fa-list"></i> <span>Production List</span></a>
+                        </li>
+                    <li class="@(ControllerHelpers.IsMenuBarActive("Index", "ProgramOfWorks")?"active":"")">
+                            <a href="@Url.Action("Index", "ProgramOfWorks")"><i class="fa fa-list"></i> <span>Program of Works</span></a>
+                        </li>
+
+                    </ul>
+                </li>*@
+
+
+
+            @if (User.UserInAction("File Management", "Enrollments", "subjects"))
+            {
+                <li class="@("treeview " + (ControllerHelpers.IsControllerName("FileManagement","Schedules","Enrollments","subjects") ? "menu-open active" : ""))">
+                    <a href="">
+                        <i class="fa fa-file"></i> <span>File Management</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @if (User.UserInAction("Students"))
+                        {
+                            <li class="@(ControllerHelpers.IsMenuBarActive("Students", "FileManagement") ? "active" : "")">
+                                <a href="@Url.Action("Students", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Students</span></a>
+                            </li>
+                        }
+                        @if (User.UserInAction("Enrollments"))
+                        {
+                            <li class="@(ControllerHelpers.IsMenuBarActive("index", "Enrollments") ? "active" : "")">
+                                <a href="@Url.Action("index", "Enrollments")"><i class="fa fa-circle-o"></i> <span>Enrollments</span></a>
+                            </li>
+                        }
+
+
+                        @if (User.UserInAction("Gradings"))
+                        {
+                            <li class="@(ControllerHelpers.IsMenuBarActive("Index", "Gradings") ? "active" : "")">
+                                <a href="@Url.Action("Index", "Gradings")"><i class="fa fa-circle-o"></i> <span>Grades</span></a>
+                            </li>
+                        }
+
+
+                        @if (User.UserInAction("Billings"))
+                        {
+                            <li class="@(ControllerHelpers.IsMenuBarActive("Billings", "FileManagement") ? "active" : "")">
+                                <a href="@Url.Action("Billings", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Billings</span></a>
+                            </li>
+                        }
+                        @if (User.UserInAction("Subjects"))
+                        {
+                            <li class="@(ControllerHelpers.IsMenuBarActive("Subjects", "subjects") ? "active" : "")">
+                                <a href="@Url.Action("Subjects", "subjects")"><i class="fa fa-circle-o"></i> <span>Subjects</span></a>
+                            </li>
+                        }
+
+                        @if (User.UserInAction("Courses"))
+                        {
+                            <li class="@(ControllerHelpers.IsMenuBarActive("Courses", "FileManagement") ? "active" : "")">
+                                <a href="@Url.Action("Courses", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Courses</span></a>
+                            </li>
+                        }
+                        @if (User.UserInAction("Schedules"))
+                        {
+                            <li class="@(ControllerHelpers.IsMenuBarActive("index", "Schedules") ? "active" : "")">
+                                <a href="@Url.Action("index", "Schedules")"><i class="fa fa-circle-o"></i> <span>Schedules</span></a>
+                            </li>
+                        }
+                        @if (User.UserInAction("SchoolYears"))
+                        {
+                            <li class="@(ControllerHelpers.IsMenuBarActive("SchoolYears", "FileManagement") ? "active" : "")">
+                                <a href="@Url.Action("SchoolYears", "filemanagement")"><i class="fa fa-circle-o"></i> <span>School Years</span></a>
+                            </li>
+                        }
+
+                        @if (User.UserInAction("Semesters"))
+                        {
+                            <li class="@(ControllerHelpers.IsMenuBarActive("Semesters", "FileManagement") ? "active" : "")">
+                                <a href="@Url.Action("Semesters", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Semesters</span></a>
+                            </li>
+                        }
+                        @if (User.UserInAction("Miscellaneous"))
+                        {
+                            <li class="@(ControllerHelpers.IsMenuBarActive("Miscellaneous", "FileManagement") ? "active" : "")">
+                                <a href="@Url.Action("Miscellaneous", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Miscellaneous</span></a>
+                            </li>
+                        }
+                        @if (User.UserInAction("AvailableCourses"))
+                        {
+                            <li class="@(ControllerHelpers.IsMenuBarActive("AvailableCourses", "FileManagement") ? "active" : "")">
+                                <a href="@Url.Action("AvailableCourses", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Available Courses</span></a>
+                            </li>
+                        }
+                        @if (User.UserInAction("AvailableSubjects"))
+                        {
+                            <li class="@(ControllerHelpers.IsMenuBarActive("AvailableSubjects", "Subjects") ? "active" : "")">
+                                <a href="@Url.Action("AvailableSubjects", "Subjects")"><i class="fa fa-circle-o"></i> <span>Available Subjects</span></a>
+                            </li>
+                        }
+                        @if (User.UserInAction("AvailableMiscellaneous"))
+                        {
+                            <li class="@(ControllerHelpers.IsMenuBarActive("AvailableMiscellaneous", "FileManagement") ? "active" : "")">
+                                <a href="@Url.Action("AvailableMiscellaneous", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Available Miscellaneous</span></a>
+                            </li>
+                        }
+                        @if (User.UserInAction("Teachers"))
+                        {
+                            <li class="@(ControllerHelpers.IsMenuBarActive("Teachers", "FileManagement") ? "active" : "")">
+                                <a href="@Url.Action("Teachers", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Teachers</span></a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+            @*@if (User.UserInAction("Reports"))
+                {
+                    <li class="@("treeview " + (ControllerHelpers.IsControllerName("report") ? "active" : ""))">
+                        <a href="">
+                            <i class="fa fa-print"></i> <span>Reports</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+
+                        <ul class="treeview-menu">
+                            @if (User.UserInAction("masterlist"))
+                            {
+                                <li class="@(ControllerHelpers.IsMenuBarActive("dailymasterlisttimerecord", "report") ? "active" : "")">
+                                    <a href="@Url.Action("masterlist", "report")"><i class="fa fa-circle"></i> <span> Master List</span></a>
+                                </li>
+                            }
+                            @if (User.UserInAction("billings"))
+                            {
+                                <li class="@(ControllerHelpers.IsMenuBarActive("billings", "report") ? "active" : "")">
+                                    <a href="@Url.Action("billings", "report")"><i class="fa fa-circle"></i> <span>Billings</span></a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }*@
+            @if (User.UserInAction("Maintenance"))
+            {
+                <li class="@("treeview " + (ViewContext.RouteData.Values["Controller"].ToString() == "maintenance" ? "active" : ""))">
+                    <a href="">
+                        <i class="fa fa-gear"></i> <span>Maintenance</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                        @if (User.UserInAction("user"))
+                        {
+                            <li class="@(ControllerHelpers.IsMenuBarActive("user", "maintenance") ? "active" : "")">
+                                <a href="@Url.Action("users", "maintenance")"><i class="fa fa-circle"></i> <span>Users</span></a>
+                            </li>
+                        }
+                        @if (User.UserInAction("userroles"))
+                        {
+                            <li class="@(ControllerHelpers.IsMenuBarActive("userroles", "maintenance") ? "active" : "")">
+                                <a href="@Url.Action("userroles", "maintenance")"><i class="fa fa-circle"></i> <span>User Category</span></a>
+                            </li>
+                        }
+                        @if (User.UserInAction("logs"))
+                        {
+                            <li class="@(ControllerHelpers.IsMenuBarActive("logs", "maintenance") ? "active" : "")">
+                                <a href="@Url.Action("logs", "maintenance")"><i class="fa fa-circle"></i> <span>Logs</span></a>
+                            </li>
+                        }
+                        @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == nameof(MaintenanceController.Controllers).ToLower() && ViewContext.RouteData.Values["Controller"].ToString() == "maintenance" ? "active" : "")">
+                                <a href="@Url.Action("controllers", "maintenance")"><i class="fa fa-circle"></i> <span>Authorized Users</span></a>
+                            </li>*@
+                    </ul>
+                </li>
+            }
+
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>

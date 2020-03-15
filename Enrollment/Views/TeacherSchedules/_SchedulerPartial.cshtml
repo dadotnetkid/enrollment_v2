@@ -1,0 +1,29 @@
+@using Enrollment.Controllers;
+@{
+    var scheduler = Html.DevExpress().Scheduler(settings =>
+    {
+        settings.Name = "Scheduler";
+        settings.CallbackRouteValues = new { Controller = "TeacherSchedules", Action = "SchedulerPartial", EnrollmentId = ViewBag.EnrollmentId };
+        settings.EditAppointmentRouteValues = new { Controller = "TeacherSchedules", Action = "SchedulerPartialEditAppointment", EnrollmentId = ViewBag.EnrollmentId };
+
+        settings.Storage.EnableReminders = false;
+        settings.Storage.Appointments.Assign(SchedulesControllerSchedulerSettings.AppointmentStorage);
+        settings.Storage.Resources.Assign(SchedulesControllerSchedulerSettings.ResourceStorage);
+        settings.ActiveViewType = SchedulerViewType.Month;
+        settings.Start = (ViewData["Appointments"] as List<Schedules>)?.FirstOrDefault()?.TimeIn ?? DateTime.Now;
+        settings.OptionsToolTips.ShowAppointmentToolTip = false;
+        settings.OptionsCustomization.AllowAppointmentEdit = UsedAppointmentType.None;
+        settings.OptionsCustomization.AllowAppointmentDelete = UsedAppointmentType.None;
+        settings.OptionsCustomization.AllowInplaceEditor = UsedAppointmentType.None;
+        settings.OptionsCustomization.AllowDisplayAppointmentDependencyForm = AllowDisplayAppointmentDependencyForm.Never;
+        settings.FloatingActionButton.TextVisibilityMode = FloatingActionButtonTextVisibilityMode.Hidden;
+        settings.ClientSideEvents.AppointmentClick = "function(s,e){console.log(e.appointmentId)}";
+
+
+    });
+    if (ViewData["SchedulerErrorText"] != null)
+    {
+        scheduler.SetErrorText((string)ViewData["SchedulerErrorText"]);
+    }
+}
+@scheduler.Bind(ViewData["Appointments"]).GetHtml()

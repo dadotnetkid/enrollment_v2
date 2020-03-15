@@ -1,0 +1,67 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "StudentsGridView" + ViewBag.CourseId;
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "FileManagement", Action = "StudentsGridViewPartial", courseId = ViewBag.CourseId };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "FileManagement", Action = "StudentsGridViewPartialAddNew", courseId = ViewBag.CourseId };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "FileManagement", Action = "StudentsGridViewPartialUpdate", courseId = ViewBag.CourseId };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "FileManagement", Action = "StudentsGridViewPartialDelete", courseId = ViewBag.CourseId };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.AddAddEditDeleteToolbar(ViewBag.CourseId != null ? false : User.UserInAction("Add Enrollment"), User.UserInAction("Edit Enrollment"), User.UserInAction("Delete Enrollment"));
+
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "SchoolId";
+            col.Width = Unit.Percentage(20);    
+        });
+        settings.Columns.Add("FullName");
+        settings.SetEditFormTemplateContent(col =>
+        {
+            Html.DevExpress().PopupControl(pop =>
+            {
+                pop.HeaderText = DataBinder.Eval(col.DataItem, "FullName")?.ToString() ?? "New Students";
+                pop.Width = 900;
+                pop.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+                pop.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+                pop.Name = col.KeyValue + "_popup";
+                pop.Modal = true;
+                pop.ShowOnPageLoad = true;
+                pop.CloseOnEscape = false;
+                pop.ShowCloseButton = true;
+                pop.ClientSideEvents.CloseUp = "function(s,e){StudentsGridView" + ViewBag.CourseId + ".CancelEdit()}";
+                pop.CloseAction = CloseAction.CloseButton;
+                pop.SetContent(() =>
+                {
+                    Html.RenderAction("StudentProfileTabPartials", new { courseId = ViewBag.CourseId, studentId = col.KeyValue });
+                });
+            }).GetHtml();
+
+        });
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Teacher Schedules";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="container">
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        showLoading();
+        $.ajax({
+            url: '@Url.Action("SchedulerPartial")',
+            success: function (s) {
+                $('#container').html(s);
+                hideLoading();
+            }
+        })
+
+    })
+</script>

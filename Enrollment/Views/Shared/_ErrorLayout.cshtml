@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Quary</title>
+    
+    @Scripts.Render("~/bundles/js")
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    @Styles.Render("~/content/css")
+    
+    @Html.Partial("_devexpress")
+    
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+</head>
+<body class="hold-transition skin-yellow sidebar-mini">
+<div class="wrapper">
+    @Html.Partial("_header")
+    @Html.Partial("_sidebar")
+
+    <div class="content-wrapper" style="min-height: 1170px;">
+        <!-- Content Header (Page header) -->
+
+        <!-- Main content -->
+        <section class="content">
+
+            <!-- Default box -->
+            @RenderBody()
+            <!-- /.box -->
+
+
+        </section>
+
+
+        <!-- /.content -->
+    </div>
+
+</div>
+@Html.DevExpress().LoadingPanel(settings =>
+{
+    settings.Name = "ldpPanel";
+}).GetHtml()
+@RenderSection("scripts", required: false)
+</body>
+</html>
+<script>
+    function hideLoading() {
+        ldpPanel.Hide();
+    }
+    function showLoading() {
+        ldpPanel.Show();
+    }
+</script>

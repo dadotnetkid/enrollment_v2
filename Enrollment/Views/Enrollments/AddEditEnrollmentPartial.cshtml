@@ -1,0 +1,71 @@
+﻿
+@model Enrollments
+@{
+    Html.RenderAction("CboStudentPartial", new { studentId = Model?.StudentId });
+    //AvailableCourseId.PerformCallback({SchoolYearId:SchoolYearId.GetValue()});
+}
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().ComboBox(settings =>
+            {
+                settings.Name = "SchoolYearId";
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "School Year";
+                settings.Properties.ValueField = "Id";
+                settings.Properties.TextField = "SchoolYearAndSemester";
+                settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){ populateCboAvailableCourse(s.GetValue())}";
+            })
+                .Bind(ViewBag.SchoolYearId).BindList(new UnitOfWork().SchoolYearsRepo.Get()).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12" id="cbo-available-course">
+        @{
+            //Html.RenderAction("CboAvailableCourse", new { schoolYearId = Model?.AvailableCourses?.SchoolYearId });
+            Html.RenderAction("CboAvailableCourse", new { enrollmentId = Model?.Id, schoolYearId = Model?.AvailableCourses?.SchoolYearId });
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div id="token-subject">
+            @{
+
+                Html.RenderAction("TokenAvailableSubjectPartial", new { courseId = Model?.AvailableCourseId ?? ViewBag.CourseId, enrollmentId = Model?.Id });
+            }
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        @{
+            Html.DevExpress().CheckBoxFor(m => m.IsDrop, settings =>
+            {
+                settings.Properties.Caption = "Is Drop";
+
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row margin-top-10">
+    <div class="col-lg-12 col-md-12 ">
+        @{
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "EnrollmentsGridViewbtnSubmit";
+                settings.Text = "Submit";
+                settings.ClientSideEvents.Click = "function(s,e){EnrollmentsGridView.UpdateEdit()}";
+
+            }).GetHtml();
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "EnrollmentsGridViewbtnCancel";
+                settings.Text = "Cancel";
+                settings.ControlStyle.CssClass = "margin-left-10";
+                settings.ClientSideEvents.Click = "function(s,e){EnrollmentsGridView.CancelEdit()}";
+            }).GetHtml();
+        }
+    </div>
+</div>

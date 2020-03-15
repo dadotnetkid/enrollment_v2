@@ -1,0 +1,10 @@
+﻿
+@{
+    Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "Controller";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.Caption = "Controllers";
+        settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){Action.PerformCallback({ControllerName:s.GetValue()})}";
+    }).Bind(ViewBag.ControllerName).BindList(Model).GetHtml();
+}

@@ -1,0 +1,20 @@
+﻿@{
+    Html.DevExpress().PopupControl(pop =>
+    {
+        pop.HeaderText = "Copy Available Subject";
+        pop.Width = Unit.Pixel(700);
+        pop.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+        pop.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        pop.Name = "popCopyAvailableSubject";
+        pop.Modal = true;
+        pop.ShowOnPageLoad = true;
+        pop.CloseOnEscape = false;
+        pop.ShowCloseButton = true;
+        pop.CloseAction = CloseAction.CloseButton;
+        pop.SetContent(() =>
+        {
+            Html.RenderAction("CopyAvailableSubjectsPartial");
+
+        });
+    }).GetHtml();
+}

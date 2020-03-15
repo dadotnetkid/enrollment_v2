@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "Grading";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Ajax.BeginForm(new AjaxOptions()
+{
+    Url = Url.Action("GradingsGridViewPartial"),
+    OnComplete = "hideLoading()",
+    OnBegin = "showLoading()",
+    UpdateTargetId = "grade-container"
+
+}))
+{
+    <div class="row">
+        <div class="col-lg-3">
+            @{
+                Html.DevExpress().TextBox(settings =>
+                {
+                    settings.Width = Unit.Percentage(100);
+                    settings.Name = "SubjectCode";
+                }).GetHtml();
+            }
+        </div>
+        <div class="col-lg-1">
+            @{
+                Html.DevExpress().Button(settings =>
+                {
+                    settings.UseSubmitBehavior = true;
+                    settings.Text = "Search";
+                    settings.Name = settings.Text;
+                    settings.Width = Unit.Percentage(100);
+                }).GetHtml();
+            }
+        </div>
+    </div>
+}
+<div  class="row margin-top-10">
+    <div class="col-lg-12 col-md-12">
+        <div id="grade-container">
+            @Html.Action("GradingsGridViewPartial")
+        </div>
+    </div>
+</div>
+

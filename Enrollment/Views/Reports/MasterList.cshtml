@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Master List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Ajax.BeginForm(Url.Action("MasterListPartial"),"reports", null, new AjaxOptions()
+{
+
+
+
+}, new { id = "ajax-master-list" }))
+{
+    Html.RenderAction("MasterListPartial");
+}

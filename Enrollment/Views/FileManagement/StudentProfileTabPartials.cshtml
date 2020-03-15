@@ -1,0 +1,68 @@
+﻿@{
+    string studentId = ViewBag.StudentId ?? "";
+}
+@Html.DevExpress().PageControl(settings =>
+{
+    settings.Name = "StudentProfileTabPartials";
+    settings.Width = Unit.Percentage(100);
+    settings.CallbackRouteValues = new {Controller="FileManagement",Action="StudentProfileTabPartials",studentId= ViewBag.StudentId };
+    settings.ClientSideEvents.ActiveTabChanged = "function(s,e){s.PerformCallback()}";
+    settings.TabPages.Add(tab =>
+    {
+        tab.Name = "Profile";
+        tab.Text = "Profile";
+        tab.SetContent(() =>
+        {
+            Html.RenderAction("AddEditStudentPartial", new {studentId=ViewBag.StudentId});
+        });
+    });
+
+    /*settings.TabPages.Add(tab =>
+    {
+        tab.Name = "Enrollment";
+        tab.Text = "Enrollment";
+        tab.Visible = new UnitOfWork().UserDetailsRepo.Fetch(m => m.Id == studentId).Any();
+        tab.SetContent(() =>
+        {
+
+            Html.RenderAction("EnrollmentsGridViewPartial", new { studentId = ViewBag.StudentId });
+
+        });
+    });
+    settings.TabPages.Add(tab =>
+    {
+        tab.Name = "Enrolled Subject";
+        tab.Text = "Enrolled Subject";
+        tab.Visible = new UnitOfWork().UserDetailsRepo.Fetch(m => m.Id == studentId).Any();
+        tab.SetContent(() =>
+        {
+
+            Html.RenderAction("EnrolledSubjectsGridViewPartial",new { studentId = ViewBag.StudentId });
+
+        });
+    });*/
+    settings.TabPages.Add(tab =>
+    {
+        tab.Name = "Grades";
+        tab.Text = "Grades";
+        tab.Visible = new UnitOfWork().UserDetailsRepo.Fetch(m => m.Id == studentId).Any();
+        tab.SetContent(() =>
+        {
+
+            @Html.RenderAction("GradesGridViewPartial", new {studentId = ViewBag.StudentId});
+
+        });
+    });
+    settings.TabPages.Add(tab =>
+    {
+        tab.Name = "Billings";
+        tab.Text = "Billings";
+        tab.Visible = new UnitOfWork().UserDetailsRepo.Fetch(m => m.Id == studentId).Any();
+        tab.SetContent(() =>
+        {
+
+            @Html.RenderAction("BillingsGridViewPartial", new {studentId = ViewBag.StudentId});
+
+        });
+    });
+}).GetHtml()

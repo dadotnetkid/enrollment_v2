@@ -1,0 +1,105 @@
+﻿@using System.Web.UI.WebControls
+@model Models.ViewModels.LoginViewModel
+
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+
+@using (Html.BeginForm("login", "member", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group has-feedback form-group-left">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.UserName, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                settings.Properties.ValidationSettings.SetFocusOnError = true;
+                settings.Properties.ValidationSettings.ValidateOnLeave = true;
+                settings.Properties.ValidationSettings.Display = Display.Dynamic;
+                settings.ShowModelErrors = true; ;
+            }).GetHtml();
+        }
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+    </div>
+    <div class="form-group has-feedback form-group-left">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.Password, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+                settings.Properties.ValidationSettings.SetFocusOnError = true;
+                settings.Properties.ValidationSettings.ValidateOnLeave = true;
+                settings.Properties.ValidationSettings.Display = Display.Dynamic;
+                settings.Properties.Password = true;
+                settings.ShowModelErrors = true; ;
+            }).GetHtml();
+        }
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+    </div>
+
+
+
+
+    <div class="row">
+        <div class="col-xs-12">
+            @{
+                Html.DevExpress().CheckBoxFor(m => m.RememberMe, settings =>
+                  {
+                      settings.Text = "Remember me?";
+                  }).GetHtml();
+            }
+
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-12">
+            @{
+                Html.DevExpress().Button(settings =>
+                {
+                    settings.Name = "btnLogin";
+                    settings.Text = "Sign In";
+                    settings.UseSubmitBehavior = true;
+                    settings.Width = Unit.Percentage(100);
+                    //  settings.ControlStyle.CssClass = "btn btn-primary btn-block btn-flat";
+                }).GetHtml();
+            }
+
+        </div>
+        <!-- /.col -->
+    </div>
+}
+
+
+
+
+
+
+<hr />
+
+
+
+@*<div class="social-auth-links text-center">
+        <p>- OR -</p>
+        <a href="#" class="btn btn-block btn-social btn-facebook btn-flat">
+            <i class="fa fa-facebook"></i> Sign in using
+            Facebook
+        </a>
+        <a href="#" class="btn btn-block btn-social btn-google btn-flat">
+            <i class="fa fa-google-plus"></i> Sign in using
+            Google+
+        </a>
+    </div>*@
+<!-- /.social-auth-links -->
+
+<a href="#" onclick="forgotShow()">I forgot my password</a><br>
+@*<a href="@Url.Action("register")" class="text-center">Register a new membership</a>*@
+
+
+@Html.Action("ForgotPopupControlPartial")
+<script>
+    function forgotShow() { ForgotPopupControl.Show() }
+</script>

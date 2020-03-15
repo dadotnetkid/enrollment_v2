@@ -1,0 +1,35 @@
+﻿@{
+    List<string> model = Model as List<string>;
+    if (model != null)
+    {
+        foreach (var i in new UnitOfWork().ActionsRepo.Get())
+        {
+
+            if (model.Any(m => m != i.Action))
+            {
+                model.Add(i.Action);
+            }
+        }
+    }
+}
+@{
+    Html.DevExpress().TokenBox(settings =>
+    {
+        settings.Name = "ActionName";
+
+        settings.Properties.Caption = "Action";
+        settings.Width = Unit.Percentage(100);
+        settings.PreRender = (s, e) =>
+        {
+            ASPxTokenBox tokenBox = s as ASPxTokenBox;
+            if (ViewBag.ActionNames != null)
+            {
+                foreach (var i in (IEnumerable<UserRolesInActions>)ViewBag.ActionNames)
+                {
+                    tokenBox.Tokens.Add(i.Action);
+                }
+               
+            }
+        };
+    }).BindList(model).GetHtml();
+}

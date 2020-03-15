@@ -1,0 +1,16 @@
+﻿@{
+    Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "Action";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.Caption = "Action";
+        
+        settings.CallbackRouteValues = new
+        {
+            Action = "CboActionsPartial",
+            Controller = "Maintenance",
+            actionName = ViewBag.ActionName,
+            controllerName = ViewBag.ControllerName
+        };
+    }).Bind(ViewBag.ActionName).BindList(Model).GetHtml();
+}

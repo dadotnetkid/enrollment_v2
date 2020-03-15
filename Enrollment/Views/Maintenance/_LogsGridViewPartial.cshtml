@@ -1,0 +1,45 @@
+@using Models.Repository
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "LogsGridView";
+        settings.CallbackRouteValues = new { Controller = "Maintenance", Action = "LogsGridViewPartial" };
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Maintenance", Action = "LogsGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Maintenance", Action = "LogsGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Maintenance", Action = "LogsGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.ShowEditButton = false;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.Columns.Add("Action");
+        settings.Columns.Add("TableName").Width = 100;
+        settings.Columns.Add("OldValues").PropertiesEdit.EncodeHtml=false;
+        settings.Columns.Add("NewValues").PropertiesEdit.EncodeHtml = false;
+        settings.Columns.Add("DateCreated").SortOrder=DevExpress.Data.ColumnSortOrder.Descending;
+
+        settings.Columns.Add("Users.FullName").Caption = "Created By";
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(new UnitOfWork().LogsRepo.Get()).GetHtml()

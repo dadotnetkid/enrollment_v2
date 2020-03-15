@@ -1,0 +1,11 @@
+﻿@model Enrollments
+    @{
+        Html.DevExpress().ComboBoxFor(m => m.StudentId, settings =>
+           {
+               settings.Name = "StudentId";
+               settings.Width = Unit.Percentage(100);
+               settings.Properties.TextField = "SchoolId";
+               settings.Properties.ValueField = "Id";
+               settings.Properties.Caption = "Student";
+           }).BindList(new UnitOfWork().UserDetailsRepo.Get(m => m.Users.UserRoles.Any(x => x.Name == "Student"))).GetHtml();
+    }

@@ -1,0 +1,72 @@
+﻿@model AvailableCourses
+@using (Ajax.BeginForm("CopyAvailableSubjectsPartial", new { }, new AjaxOptions()
+{
+    UpdateTargetId = "form-copy-available-subjects",
+    OnBegin = "showLoading()",
+    OnComplete = "hideLoading()",
+    InsertionMode = InsertionMode.ReplaceWith
+}, new { id = "form-copy-available-subjects" }))
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <b>Source</b>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    @{
+                        Html.DevExpress().ComboBoxFor(m => m.SchoolYearId, settings =>
+                        {
+                            settings.Width = Unit.Percentage(100);
+                            settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){$('#form-copy-available-subjects').submit()}";
+                            settings.Properties.ValueField = "Id";
+                            settings.Properties.TextField = "SchoolYearAndSemester";
+                            settings.Properties.Caption = "School Year";
+                        }).BindList(new UnitOfWork().SchoolYearsRepo.Fetch().ToList()).GetHtml();
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    @{
+                        Html.DevExpress().ComboBox(settings =>
+                        {
+                            settings.Name = "AvailableCourseId";
+                            settings.Width = Unit.Percentage(100);
+                                    //settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){$('#form-copy-available-subjects').submit()}";
+                                    settings.Properties.TextField = "AvailableCourse";
+                            settings.Properties.ValueField = "Id";
+                            settings.Properties.Caption = "Course and Semester";
+                        }).BindList(ViewBag.availableCourses).Bind(Model?.Id).GetHtml();
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <b>Destination</b>
+        </div>
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    @{
+                        var schoolYearId = Model?.SchoolYearId;
+                        Html.DevExpress().ComboBox(settings =>
+                        {
+                            settings.Name = "DestinationAvailableCourseId";
+                            settings.Width = Unit.Percentage(100);
+                            //settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){$('#form-copy-available-subjects').submit()}";
+                            settings.Properties.TextField = "AvailableCourse";
+                            settings.Properties.ValueField = "Id";
+                            settings.Properties.Caption = "Course and Semester";
+
+                            
+                        }).BindList(new UnitOfWork().AvailableCoursesRepo.Fetch(x => x.SchoolYearId != schoolYearId && !x.AvailableSubjects.Any()).ToList() ).Bind(Model?.Id).GetHtml();
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}

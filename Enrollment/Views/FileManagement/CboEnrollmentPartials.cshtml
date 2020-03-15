@@ -1,0 +1,13 @@
+﻿@model Billings
+    @{
+        Html.DevExpress().ComboBoxFor(m => m.EnrollmentId, settings =>
+        {
+            settings.Width = Unit.Percentage(100);
+            settings.Properties.Caption = "Enrollment";
+            settings.Properties.ValueField = "Id";
+            settings.Properties.TextField = "AvailableCourses.AvailableCourse";
+            settings.CallbackRouteValues = new { Controller = "FileManagement", Action = "CboEnrollmentPartials" };
+        })
+            .BindList(ViewBag.Students)
+            .GetHtml();
+    }

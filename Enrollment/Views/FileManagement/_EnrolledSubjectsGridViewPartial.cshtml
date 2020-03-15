@@ -1,0 +1,76 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "EnrolledSubjectsGridView";
+
+        settings.Width = Unit.Percentage(100);
+
+        settings.CallbackRouteValues = new { Controller = "FileManagement", Action = "EnrolledSubjectsGridViewPartial", studentId = ViewBag.StudentId };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "FileManagement", Action = "EnrolledSubjectsGridViewPartialAddNew", studentId = ViewBag.StudentId };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "FileManagement", Action = "EnrolledSubjectsGridViewPartialUpdate", studentId = ViewBag.StudentId };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "FileManagement", Action = "EnrolledSubjectsGridViewPartialDelete", studentId = ViewBag.StudentId };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.AddAddEditDeleteToolbar(User.UserInAction("Add Enrolled Subject"), false, User.UserInAction("Delete Enrolled Subject"));
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.Columns.Add("AvailableSubjects.SubjectCode");
+        settings.Columns.Add(colSettings =>
+        {
+            colSettings.FieldName = "AvailableSubjects.AvailableCourses.AvailableCourse";
+            colSettings.Caption = "School Year";
+            colSettings.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var cbo = colSettings.PropertiesEdit as ComboBoxProperties;
+
+            cbo.DataSource = (Model as List<EnrolledSubject>).GroupBy(x => x.AvailableSubjects.AvailableCourses.AvailableCourse).Select(x => new { AvailableCourse = x.Key });
+            cbo.TextField = "AvailableCourse";
+
+        });
+        settings.SetEditFormTemplateContent(col =>
+        {
+            Html.DevExpress().PopupControl(pop =>
+            {
+                pop.HeaderText = "Enrollment";
+                pop.Width = 700;
+                pop.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+                pop.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+                pop.Name = col.KeyValue + "_popup";
+                pop.Modal = true;
+                pop.ShowOnPageLoad = true;
+                pop.CloseOnEscape = false;
+                pop.ShowCloseButton = true;
+                pop.ClientSideEvents.CloseUp = "function(s,e){EnrolledSubjectsGridView.CancelEdit()}";
+                pop.CloseAction = CloseAction.CloseButton;
+                pop.SetContent(() =>
+                {
+                    Html.RenderAction("AddEditEnrolledSubjectPartial", new { enrolledSubjectId = col.KeyValue, studentId = ViewBag.StudentId });
+                });
+            }).GetHtml();
+
+        });
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

@@ -1,0 +1,71 @@
+﻿
+@model UserDetails
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.Users.Email, settings =>
+            {
+
+                settings.Properties.Caption = "Email";
+                settings.Width = Unit.Percentage(100);
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.Users.Password, settings =>
+            {
+                settings.Properties.Caption = "Password";
+                settings.Width = Unit.Percentage(100);
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.FirstName, settings =>
+            {
+                settings.Properties.Caption = "First Name";
+                settings.Width = Unit.Percentage(100);
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.MiddleName, settings =>
+            {
+                settings.Properties.Caption = "Middle Name";
+                settings.Width = Unit.Percentage(100);
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.LastName, settings =>
+            {
+                settings.Properties.Caption = "Last Name";
+                settings.Width = Unit.Percentage(100);
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row margin-top-10">
+    <div class="col-lg-12 col-md-12 ">
+        @{
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "btnSubmit";
+                settings.Text = "Submit";
+                settings.UseSubmitBehavior = true;
+            }).GetHtml();
+
+        }
+    </div>
+</div>

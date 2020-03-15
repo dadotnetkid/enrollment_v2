@@ -1,0 +1,13 @@
+﻿@{
+    Html.DevExpress().TokenBox(settings =>
+    {
+        settings.Name = "AvailableSubjectIds";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.Caption = "Subjects";
+        settings.Properties.ValueField = "Id";
+        settings.Properties.TextField = "SubjectCode";
+        settings.CallbackRouteValues = new { controller = "FileManagement", Action = "TokenEnrolledSubjectAvailableSubjectPartial" };
+    })
+        .BindList(Model)
+        .GetHtml();
+}
