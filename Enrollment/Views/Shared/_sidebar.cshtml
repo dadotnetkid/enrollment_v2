@@ -81,7 +81,13 @@
                                 <a href="@Url.Action("index", "Enrollments")"><i class="fa fa-circle-o"></i> <span>Enrollments</span></a>
                             </li>
                         }
+                        @if (User.UserInAction("Announcement"))
+                        {
 
+                            <li class="@(ControllerHelpers.IsMenuBarActive("Index", "profile") ? "active" : "")">
+                                <a href="@Url.Action("Index", "profile")"><i class="fa fa-graduation-cap"></i> <span>profile</span></a>
+                            </li>
+                        }
 
                         @if (User.UserInAction("Gradings"))
                         {
