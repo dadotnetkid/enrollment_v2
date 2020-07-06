@@ -33,7 +33,7 @@ namespace Enrollment.Controllers
         {
             return PartialView();
         }
-      
+
         [OnUserAuthorization("SchoolYears")]
         public ActionResult SchoolYears()
         {
@@ -155,7 +155,7 @@ namespace Enrollment.Controllers
 
 
         #endregion
-        
+
         #region course
 
         public ActionResult AddEditCoursePartial([ModelBinder(typeof(DevExpressEditorsBinder))]int? courseId)
@@ -271,11 +271,14 @@ namespace Enrollment.Controllers
                             FirstName = item.FirstName,
                             MiddleName = item.MiddleName,
                             LastName = item.LastName,
-                            SchoolId = item.SchoolId
+                            SchoolId = item.SchoolId,
+                            IdNo = item.IdNo,
+                            EnrolledYear = DateTime.Now.Year
                         }
                     };
 
                     await UserManager.CreateAsync(user, item.Users.Password);
+
                     var result = await UserManager.AddToRoleAsync(user.Id, "Student");
                 }
                 catch (Exception e)
@@ -313,6 +316,8 @@ namespace Enrollment.Controllers
                     user.UserDetails.MiddleName = item.MiddleName;
                     user.UserDetails.LastName = item.LastName;
                     user.UserDetails.SchoolId = item.SchoolId;
+
+
                     if (item.Users.Password != null)
                         await UserManager.ChangePasswordAsync(user, item.Users.Password);
                     user.UserRoles.Clear();
@@ -552,7 +557,7 @@ namespace Enrollment.Controllers
 
         #endregion
 
-        
+
 
         #region enrolled subject
 
@@ -1155,7 +1160,10 @@ namespace Enrollment.Controllers
                             SchoolId = item.SchoolId,
                             FirstName = item.FirstName,
                             MiddleName = item.MiddleName,
-                            LastName = item.LastName
+                            LastName = item.LastName,
+                            EnrolledYear = DateTime.Now.Year,
+                            IdNo = item.IdNo,
+
                         },
 
                     };
@@ -1164,6 +1172,8 @@ namespace Enrollment.Controllers
                     //    user.UserRoles.Add(unitOfWork.UserRolesRepo.Find(m => m.Id == i));
                     //}
                     var res = await UserManager.CreateAsync(user, item.Users.Password);
+                    if (!item.UserRoles.Any())
+                        item.UserRoles.Add("Teacher");
                     var result = await UserManager.AddToRolesAsync(user.Id, item.UserRoles.ToArray());
                     // Insert here a code to insert the new item in your model
                 }
@@ -1194,6 +1204,7 @@ namespace Enrollment.Controllers
                     user.UserDetails.MiddleName = item.MiddleName;
                     user.UserDetails.LastName = item.LastName;
                     user.UserDetails.SchoolId = item.SchoolId;
+
                     if (item.Users.Password != null)
                         await UserManager.ChangePasswordAsync(user, item.Users.Password);
                     user.UserRoles.Clear();
@@ -1297,7 +1308,7 @@ namespace Enrollment.Controllers
         }
         [HttpPost, ValidateInput(false)]
         [OnUserAuthorization("Delete Announcement")]
-        public ActionResult AnnouncementGridViewPartialDelete(System.Int32 Id)
+        public ActionResult AnnouncementGridViewPartialDelete([ModelBinder(typeof(DevExpressEditorsBinder))]System.Int32 Id)
         {
 
             if (Id >= 0)

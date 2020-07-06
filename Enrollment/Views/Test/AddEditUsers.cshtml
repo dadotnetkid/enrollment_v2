@@ -1,0 +1,9 @@
+﻿@model Users
+
+    @Html.Action("ListBoxPartial", new { userId = Model?.Id })
+@Html.DevExpress().Button(settings =>
+{
+    settings.Name = "btnSubmit";
+    settings.Text = "submit";
+    settings.ClientSideEvents.Click = "function(s,e){StudentGridView.UpdateEdit()}";
+}).GetHtml()

@@ -52,7 +52,7 @@
         <AssociationConnector Association="Model.FK_Credits_Users" />
         <EntityTypeShape EntityType="Model.Subjects" Width="1.5" PointX="3.375" PointY="0.875" />
         <AssociationConnector Association="Model.FK_AvailableSubjects_Subjects" />
-        <EntityTypeShape EntityType="Model.UserDetails" Width="1.5" PointX="5.25" PointY="23.25" />
+        <EntityTypeShape EntityType="Model.UserDetails" Width="1.5" PointX="5.25" PointY="23.125" />
         <AssociationConnector Association="Model.FK_AvailableSubjects_UserDetails" />
         <AssociationConnector Association="Model.FK_Enrollments_UserDetails" />
         <AssociationConnector Association="Model.FK_UserDetails_Users" />

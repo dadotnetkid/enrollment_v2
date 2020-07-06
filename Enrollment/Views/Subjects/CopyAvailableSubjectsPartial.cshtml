@@ -1,10 +1,10 @@
 ﻿@model AvailableCourses
 @using (Ajax.BeginForm("CopyAvailableSubjectsPartial", new { }, new AjaxOptions()
 {
-    UpdateTargetId = "form-copy-available-subjects",
+    UpdateTargetId = "copy-available-subjects",
     OnBegin = "showLoading()",
     OnComplete = "hideLoading()",
-    InsertionMode = InsertionMode.ReplaceWith
+    OnSuccess= "onSuccessCopy"
 }, new { id = "form-copy-available-subjects" }))
 {
     <div class="panel panel-default">
@@ -57,16 +57,23 @@
                         {
                             settings.Name = "DestinationAvailableCourseId";
                             settings.Width = Unit.Percentage(100);
-                            //settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){$('#form-copy-available-subjects').submit()}";
-                            settings.Properties.TextField = "AvailableCourse";
+                                    //settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){$('#form-copy-available-subjects').submit()}";
+                                    settings.Properties.TextField = "AvailableCourse";
                             settings.Properties.ValueField = "Id";
                             settings.Properties.Caption = "Course and Semester";
 
-                            
-                        }).BindList(new UnitOfWork().AvailableCoursesRepo.Fetch(x => x.SchoolYearId != schoolYearId && !x.AvailableSubjects.Any()).ToList() ).Bind(Model?.Id).GetHtml();
+
+                        }).BindList(new UnitOfWork().AvailableCoursesRepo.Fetch(x => x.SchoolYearId != schoolYearId && !x.AvailableSubjects.Any()).ToList()).Bind(Model?.Id).GetHtml();
                     }
                 </div>
             </div>
         </div>
     </div>
+    @Html.DevExpress().Button(settings =>
+{
+    settings.Name = "btnSubmit";
+    settings.UseSubmitBehavior = true;
+    settings.RouteValues = new {Action = "CopyAvailableSubjectsPartial", Controller="Subjects",isPost=true};
+    settings.Text = "Copy";
+}).GetHtml()
 }

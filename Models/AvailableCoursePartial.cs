@@ -16,5 +16,7 @@ namespace Models
         public decimal? TotalMiscellaneous => this.AvailableMiscellaneous.Sum(m => m.Miscellaneous.Cost);
         public int? EnrolledStudents => this.Enrollments.Count();
 
+        public int AvailableCourseId { get; set; }
+        public int DestinationAvailableCourseId { get; set; }
     }
 }

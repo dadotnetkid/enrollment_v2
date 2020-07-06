@@ -1,0 +1,11 @@
+
+@Html.DevExpress().ListBox( settings =>
+{
+   
+    settings.Name = "UserRoles";
+            settings.CallbackRouteValues = new { Controller = "Test", Action = "ListBoxPartial" };
+    settings.Properties.CallbackPageSize = 50;
+            settings.Properties.ValueField = "Id";
+    settings.Properties.TextField = "Name";
+        settings.Properties.SelectionMode = ListEditSelectionMode.Multiple;
+    }).BindList(new UnitOfWork().UserRolesRepo.Get()).GetHtml()

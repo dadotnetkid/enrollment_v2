@@ -26,20 +26,47 @@ namespace Helpers
                 return course?.Courses?.CourseCode + "101";
             return subjectCode;
         }
-
-        public string GenerateSchoolId()
+        public int GenerateSchoolId()
         {
             //FGSC20-0
-            var userDetail = unitOfWork.UserDetailsRepo.Fetch().Count() + 1;
-            if (!unitOfWork.UserDetailsRepo.Fetch().Any())
-                return "FGSC" + DateTime.Now.ToString("yy") + "-0";
-            var schoolId = "FGSC" + DateTime.Now.ToString("yy") + "-" + userDetail;
-            while (unitOfWork.UserDetailsRepo.Fetch(m => m.SchoolId == schoolId).Any())
-            {
-                userDetail++;
-                schoolId = "FGSC" + DateTime.Now.ToString("yy") + "-" + userDetail;
-            }
-            return schoolId;
+            //get last id entry
+            int year = DateTime.Now.Year;
+            var userDetail = unitOfWork.UserDetailsRepo.Fetch(x => x.EnrolledYear == year && x.SchoolId != null).OrderByDescending(x => x.IdNo).FirstOrDefault();
+            if (userDetail == null)
+                return 1;
+            return (userDetail.IdNo ?? 0) + 1;
+
+
+
+
+
+
+
+            //if (!unitOfWork.UserDetailsRepo.Fetch().Any())
+            //    return "FGSC" + DateTime.Now.ToString("yy") + "-0";
+            //var schoolId = "FGSC" + DateTime.Now.ToString("yy") + "-" + userDetail;
+            //while (unitOfWork.UserDetailsRepo.Fetch(m => m.SchoolId == schoolId).Any())
+            //{
+            //    userDetail++;
+            //    schoolId = "FGSC" + DateTime.Now.ToString("yy") + "-" + userDetail;
+            //}
+            //return schoolId;
         }
+
+
+        /* public string GenerateSchoolId()
+         {
+             //FGSC20-0
+             var userDetail = unitOfWork.UserDetailsRepo.Fetch().Count() + 1;
+             if (!unitOfWork.UserDetailsRepo.Fetch().Any())
+                 return "FGSC" + DateTime.Now.ToString("yy") + "-0";
+             var schoolId = "FGSC" + DateTime.Now.ToString("yy") + "-" + userDetail;
+             while (unitOfWork.UserDetailsRepo.Fetch(m => m.SchoolId == schoolId).Any())
+             {
+                 userDetail++;
+                 schoolId = "FGSC" + DateTime.Now.ToString("yy") + "-" + userDetail;
+             }
+             return schoolId;
+         }*/
     }
 }

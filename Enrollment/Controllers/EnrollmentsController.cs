@@ -75,6 +75,7 @@ namespace Enrollment.Controllers
                         item.EnrolledSubject.Add(enrolled);
                     }
                     // Insert here a code to insert the new item in your model
+                    item.DateCreated = DateTime.Now;
                     unitOfWork.EnrollmentsRepo.Insert(item);
                     unitOfWork.Save();
                 }
@@ -100,9 +101,11 @@ namespace Enrollment.Controllers
             {
                 try
                 {
-                    // Insert here a code to update the item in your model
-
-                    unitOfWork.EnrollmentsRepo.Update(item);
+                    // Insert here a code to update the item in your model 
+                    var ret = unitOfWork.EnrollmentsRepo.Find(x => x.Id == item.Id);
+                    ret.StudentId = item.StudentId;
+                    ret.AvailableCourseId = item.AvailableCourseId;
+                    ret.IsDrop = item.IsDrop;
                     unitOfWork.Save();
                 }
                 catch (Exception e)

@@ -1,0 +1,83 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Width = Unit.Percentage(100);
+        settings.Name = "EnrollmentGridView";
+        settings.CallbackRouteValues = new
+        {
+            Controller = "Student",
+            Action = "EnrollmentGridViewPartial"
+        };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Student", Action = "EnrollmentGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Student", Action = "EnrollmentGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Student", Action = "EnrollmentGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 300;
+        settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = false;
+        settings.SettingsDetail.ShowDetailRow = true;
+        settings.SetDetailRowTemplateContent(content =>
+        {
+            Html.RenderAction("BillingsDetailGridViewPartial", new {enrollmentId = content.KeyValue});
+
+        });
+
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "AvailableCourses.TotalMiscellaneous";
+            col.Caption = "Miscellaneous";
+            col.PropertiesEdit.DisplayFormatString = "Php #,#.00";
+        });
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "Balance";
+            col.Caption = "Balance";
+            col.PropertiesEdit.DisplayFormatString = "Php #,#.00";
+        });
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "AvailableCourses.AvailableCourse";
+            col.Caption = "Enrolled Course and Year";
+        });
+        settings.Columns.Add(col =>
+        {
+            col.SetDataItemTemplateContent(content =>
+            {
+                Html.DevExpress().Button(btnSettings =>
+                {
+                    btnSettings.Name = "btn_" + content.KeyValue;
+                    btnSettings.Text = "Print Billing";
+                    btnSettings.ClientSideEvents.Click = "function(s,e){showBilling('" + content.KeyValue + "')}";
+
+                }).GetHtml();
+            });
+
+        });
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

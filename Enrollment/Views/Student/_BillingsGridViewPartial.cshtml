@@ -1,13 +1,13 @@
 @{
     var grid = Html.DevExpress().GridView(settings =>
     {
-        settings.Name = "AvailableMiscellaneousGridView";
-        settings.Width = Unit.Percentage(100);
-        settings.CallbackRouteValues = new { Controller = "FileManagement", Action = "AvailableMiscellaneousGridViewPartial" };
+        settings.Name = "BillingsGridView";
 
-        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "FileManagement", Action = "AvailableMiscellaneousGridViewPartialAddNew" };
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "FileManagement", Action = "AvailableMiscellaneousGridViewPartialUpdate" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "FileManagement", Action = "AvailableMiscellaneousGridViewPartialDelete" };
+        settings.Width = Unit.Percentage(100);
+
+
+        settings.CallbackRouteValues = new { Controller = "Student", Action = "BillingsGridViewPartial" };
+
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsBehavior.ConfirmDelete = true;
 
@@ -19,37 +19,30 @@
         settings.KeyFieldName = "Id";
 
         settings.SettingsPager.Visible = true;
-        settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
         settings.Settings.ShowGroupPanel = false;
         settings.Settings.ShowFilterRow = true;
         settings.SettingsBehavior.AllowSelectByRowClick = true;
 
-        settings.AddAddEditDeleteToolbar(User.UserInAction("Add Available Miscellaneous"), User.UserInAction("Edit Available Miscellaneous"), User.UserInAction("Edit Available Miscellaneous"));
-        settings.PreRender = (s, e) =>
-        {
-            if (s is MVCxGridView x)
-            {
-                x.ExpandAll();
-            }
 
-        };
+        settings.AddAddEditDeleteToolbar(false, false, false);
 
         settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
         settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
         settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
-        settings.Columns.Add("AvailableCourses.SchoolYears.SchoolYear").GroupIndex = 0;
-        settings.Columns.Add("AvailableCourses.Courses.Course").GroupIndex = 1;
-        settings.Columns.Add("AvailableCourses.SchoolYears.Semesters.Semester").GroupIndex = 2;
-        //settings.Columns.Add("AvailableCourses.AvailableCourse").GroupIndex = 3;
-        settings.Columns.Add("Miscellaneous.MiscellaneousName");
-        settings.Columns.Add("Miscellaneous.Cost");
+        settings.Columns.Add("Enrollments.AvailableCourses.AvailableCourse").GroupIndex=0;
+        settings.Columns.Add("Enrollments.UserDetails.FullName");
+
+        settings.Columns.Add("Enrollments.AvailableCourses.SchoolYears.SchoolYearAndSemester");
+        settings.Columns.Add("OfficialReceipt");
+        settings.Columns.Add("Amount");
+        settings.Columns.Add("DateCreated");
         settings.SetEditFormTemplateContent(col =>
         {
             Html.DevExpress().PopupControl(pop =>
             {
-                pop.HeaderText = "Available Miscellaneous";
+                pop.HeaderText = "Billings";
                 pop.Width = 700;
                 pop.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
                 pop.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
@@ -58,11 +51,11 @@
                 pop.ShowOnPageLoad = true;
                 pop.CloseOnEscape = false;
                 pop.ShowCloseButton = true;
-                pop.ClientSideEvents.CloseUp = "function(s,e){AvailableMiscellaneousGridView.CancelEdit()}";
+                pop.ClientSideEvents.CloseUp = "function(s,e){BillingsGridView.CancelEdit()}";
                 pop.CloseAction = CloseAction.CloseButton;
                 pop.SetContent(() =>
                 {
-                    Html.RenderAction("AddEditAvailableMiscellaneous", new { availableMiscellaneousId = col.KeyValue });
+                    Html.RenderAction("AddEditBillingPartial", new {  billingId= col.KeyValue });
                 });
             }).GetHtml();
 

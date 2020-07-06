@@ -6,6 +6,6 @@
             settings.Properties.Caption = "Subjects";
             settings.Properties.TextField = "Subject";
             settings.Properties.ValueField = "Id";
-            settings.CallbackRouteValues = new {Controller = "FileManagement",Action= "CboSubjectsPartial" };
+            settings.CallbackRouteValues = new {Controller = "Subjects",Action= "CboSubjectsPartial" };
         }).BindList(ViewBag.Subjects).GetHtml();
     }

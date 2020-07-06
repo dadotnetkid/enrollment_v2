@@ -13,6 +13,16 @@ namespace Enrollment.Controllers
         {
             return View();
         }
+        public ActionResult LatestEnrolledStudents()
+        {
+            
+            return PartialView(unitOfWork.EnrollmentsRepo.Get());
+        }
+
+        public ActionResult Announcements()
+        {
+            return PartialView(unitOfWork.AnnouncementsRepo.Get());
+        }
 
         public ActionResult CoursesGridViewPartial()
         {

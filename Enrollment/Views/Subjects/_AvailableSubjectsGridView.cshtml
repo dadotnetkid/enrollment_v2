@@ -90,6 +90,7 @@
             var cbo = col.PropertiesEdit as ComboBoxProperties;
             cbo.DataSource = (Model as List<AvailableSubjects>)?.Select(x => new { AvailableCourse = x.AvailableCourses.AvailableCourse }).GroupBy(x => x.AvailableCourse).Select(x => new { course = x.Key });
             cbo.TextField = "Course";
+            col.GroupIndex = 2;
         });
 
 

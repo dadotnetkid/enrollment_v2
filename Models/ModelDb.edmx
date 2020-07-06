@@ -16,7 +16,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Announcement" Type="nvarchar(max)" />
           <Property Name="Date" Type="datetime" />
         </EntityType>
@@ -96,6 +96,7 @@
           <Property Name="StudentId" Type="nvarchar" MaxLength="128" />
           <Property Name="AvailableCourseId" Type="int" />
           <Property Name="IsDrop" Type="bit" />
+          <Property Name="DateCreated" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="Grades">
           <Key>
@@ -234,6 +235,8 @@
           <Property Name="LastName" Type="nvarchar" MaxLength="128" />
           <Property Name="Address" Type="nvarchar(max)" />
           <Property Name="Gender" Type="nvarchar" MaxLength="128" />
+          <Property Name="IdNo" Type="int" />
+          <Property Name="EnrolledYear" Type="int" />
           <Property Name="SchoolId" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="UserLogins">
@@ -853,7 +856,7 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UserDetails" EntitySet="UserDetails" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Actions">
           <Key>
             <PropertyRef Name="Id" />
@@ -906,6 +909,7 @@
           <NavigationProperty Name="AvailableCourses" Relationship="Model.FK_Enrollments_AvailableCourses" FromRole="Enrollments" ToRole="AvailableCourses" />
           <NavigationProperty Name="Billings" Relationship="Model.FK_Billings_Enrollments" FromRole="Enrollments" ToRole="Billings" />
           <NavigationProperty Name="EnrolledSubject" Relationship="Model.FK_EnrolledSubject_Enrollments" FromRole="Enrollments" ToRole="EnrolledSubject" />
+          <Property Name="DateCreated" Type="DateTime" Precision="7" />
           <NavigationProperty Name="UserDetails" Relationship="Model.FK_Enrollments_UserDetails" FromRole="Enrollments" ToRole="UserDetails" />
         </EntityType>
         <EntityType Name="Logs">
@@ -1303,7 +1307,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Announcement" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Date" Type="DateTime" Precision="3" />
         </EntityType>
@@ -1433,6 +1437,8 @@
           <Property Name="LastName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IdNo" Type="Int32" />
+          <Property Name="EnrolledYear" Type="Int32" />
           <Property Name="SchoolId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AvailableSubjects" Relationship="Model.FK_AvailableSubjects_UserDetails" FromRole="UserDetails" ToRole="AvailableSubjects" />
           <NavigationProperty Name="Enrollments" Relationship="Model.FK_Enrollments_UserDetails" FromRole="UserDetails" ToRole="Enrollments" />
@@ -1525,6 +1531,7 @@
           <EntitySetMapping Name="Enrollments">
             <EntityTypeMapping TypeName="Model.Enrollments">
               <MappingFragment StoreEntitySet="Enrollments">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="IsDrop" ColumnName="IsDrop" />
                 <ScalarProperty Name="AvailableCourseId" ColumnName="AvailableCourseId" />
                 <ScalarProperty Name="StudentId" ColumnName="StudentId" />
@@ -1787,6 +1794,8 @@
             <EntityTypeMapping TypeName="Model.UserDetails">
               <MappingFragment StoreEntitySet="UserDetails">
                 <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
+                <ScalarProperty Name="EnrolledYear" ColumnName="EnrolledYear" />
+                <ScalarProperty Name="IdNo" ColumnName="IdNo" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />

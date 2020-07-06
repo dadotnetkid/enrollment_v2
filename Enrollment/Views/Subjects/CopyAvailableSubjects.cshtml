@@ -13,8 +13,9 @@
         pop.CloseAction = CloseAction.CloseButton;
         pop.SetContent(() =>
         {
+            ViewContext.Writer.Write("<div id='copy-available-subjects'>");
             Html.RenderAction("CopyAvailableSubjectsPartial");
-
+            ViewContext.Writer.Write("</div>");
         });
     }).GetHtml();
 }

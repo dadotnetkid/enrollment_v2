@@ -1,5 +1,9 @@
 ﻿
 @model UserDetails
+@{
+    var id = new IdHelpers().GenerateSchoolId();
+}
+<input type="hidden" value="@id" name="IdNo"/>
 <div class="row">
     <div class="col-lg-12">
         @{
@@ -8,7 +12,7 @@
 
                 settings.Properties.Caption = "School Id";
                 settings.Width = Unit.Percentage(100);
-            }).Bind(Model?.SchoolId ?? new IdHelpers().GenerateSchoolId()).GetHtml();
+            }).Bind(Model?.SchoolId ?? ($"FGSC{DateTime.Now.Year}-" + id.ToString($"00"))).GetHtml();
         }
     </div>
 </div>

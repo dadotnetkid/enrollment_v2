@@ -14,19 +14,33 @@
                 <a href="@Url.Action("Index", "Messages")"><i class="fa fa-mail-reply-all"></i> <span>Messages</span></a>
             </li>
 
-            @if (User.UserInAction("profile"))
-            {
-
-                <li class="@(ControllerHelpers.IsMenuBarActive("Index", "profile") ? "active" : "")">
-                    <a href="@Url.Action("Index", "profile")"><i class="fa fa-graduation-cap"></i> <span>profile</span></a>
-                </li>
-            }
+    
 
             @if (User.IsInRole("Student"))
             {
 
-                <li class="@(ControllerHelpers.IsMenuBarActive("Index", "schedules") ? "active" : "")">
-                    <a href="@Url.Action("Index", "schedules",new { studentId=User.Identity.GetUserId()})"><i class="fa fa-calendar"></i> <span>Student Schedules</span></a>
+                <li class="@("treeview " + (ControllerHelpers.IsControllerName("Student") ? "menu-open active" : ""))">
+                    <a href="">
+                        <i class="fa fa-file"></i> <span>Student Profile</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        
+                        <li class="@(ControllerHelpers.IsMenuBarActive("Index", "schedules") ? "active" : "")">
+                            <a href="@Url.Action("Index", "schedules",new { studentId=User.Identity.GetUserId()})"><i class="fa fa-calendar"></i> <span>Student Schedules</span></a>
+                        </li>
+                        @*<li class="@(ControllerHelpers.IsMenuBarActive("Announcement", "Student") ? "active" : "")">
+                            <a href="@Url.Action("Billings", "Student")"><i class="fa fa-circle-o"></i> <span>Billings</span></a>
+                        </li>*@
+                        <li class="@(ControllerHelpers.IsMenuBarActive("Grades", "Student") ? "active" : "")">
+                            <a href="@Url.Action("Grades", "Student")"><i class="fa fa-circle-o"></i> <span>Grades</span></a>
+                        </li>
+                        <li class="@(ControllerHelpers.IsMenuBarActive("Enrollments", "Student") ? "active" : "")">
+                            <a href="@Url.Action("Enrollments", "Student")"><i class="fa fa-circle-o"></i> <span>Enrollments</span></a>
+                        </li>
+                    </ul>
                 </li>
             }
             @if (User.UserInAction("Teacher Schedule"))
@@ -36,27 +50,8 @@
                     <a href="@Url.Action("Index", "teacherschedules")"><i class="fa fa-calendar"></i> <span>Teacher Schedules</span></a>
                 </li>
             }
-            @*<li class="@("treeview " + (ControllerHelpers.IsControllerName("transactions")  ? "menu-open active" : ""))">
-                    <a href="">
-                        <i class="fa fa-book"></i> <span>Transactions</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="@(ControllerHelpers.IsMenuBarActive("Index", "transactions") ?"active":"")">
-                            <a href="@Url.Action("Index", "transactions")"><i class="fa fa-list"></i> <span>Transactions List</span></a>
-                        </li>
-                    <li class="@(ControllerHelpers.IsMenuBarActive("Productions", "transactions")?"active":"")">
-                            <a href="@Url.Action("Productions", "transactions")"><i class="fa fa-list"></i> <span>Production List</span></a>
-                        </li>
-                    <li class="@(ControllerHelpers.IsMenuBarActive("Index", "ProgramOfWorks")?"active":"")">
-                            <a href="@Url.Action("Index", "ProgramOfWorks")"><i class="fa fa-list"></i> <span>Program of Works</span></a>
-                        </li>
-
-                    </ul>
-                </li>*@
-
+           
+           
 
 
             @if (User.UserInAction("File Management", "Enrollments", "subjects"))
@@ -69,6 +64,12 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
+                        @if (User.UserInAction("Announcement"))
+                        {
+                            <li class="@(ControllerHelpers.IsMenuBarActive("Announcement", "FileManagement") ? "active" : "")">
+                                <a href="@Url.Action("Announcement", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Announcement</span></a>
+                            </li>
+                        }
                         @if (User.UserInAction("Students"))
                         {
                             <li class="@(ControllerHelpers.IsMenuBarActive("Students", "FileManagement") ? "active" : "")">
@@ -79,13 +80,6 @@
                         {
                             <li class="@(ControllerHelpers.IsMenuBarActive("index", "Enrollments") ? "active" : "")">
                                 <a href="@Url.Action("index", "Enrollments")"><i class="fa fa-circle-o"></i> <span>Enrollments</span></a>
-                            </li>
-                        }
-                        @if (User.UserInAction("Announcement"))
-                        {
-
-                            <li class="@(ControllerHelpers.IsMenuBarActive("Index", "profile") ? "active" : "")">
-                                <a href="@Url.Action("Index", "profile")"><i class="fa fa-graduation-cap"></i> <span>profile</span></a>
                             </li>
                         }
 

@@ -40,8 +40,47 @@ namespace Enrollment.Controllers
         {
             ViewBag.SubjectCode = subjectCode;
             var model = new List<Grades>();
+
             if (subjectCode != null)
-                model = unitOfWork.GradesRepo.Get(m => m.EnrolledSubject.AvailableSubjects.SubjectCode == subjectCode || (m.EnrolledSubject.Enrollments.UserDetails.FirstName.Contains(subjectCode) || m.EnrolledSubject.Enrollments.UserDetails.LastName.Contains(subjectCode))).ToList();
+            {
+                var name = subjectCode.Split(' ');
+
+                if (unitOfWork.GradesRepo.Fetch(m => m.EnrolledSubject.AvailableSubjects.SubjectCode == subjectCode)
+                    .Any())
+                {
+                    model = unitOfWork.GradesRepo.Get(m =>
+                        m.EnrolledSubject.AvailableSubjects.SubjectCode == subjectCode).ToList();
+                }
+                else if (unitOfWork.GradesRepo.Fetch(m =>
+                    (m.EnrolledSubject.Enrollments.UserDetails.LastName + " " +
+                     m.EnrolledSubject.Enrollments.UserDetails.FirstName).Contains(subjectCode)).Any())
+                {
+                    model = unitOfWork.GradesRepo.Get(m =>
+                        (m.EnrolledSubject.Enrollments.UserDetails.LastName + " " +
+                         m.EnrolledSubject.Enrollments.UserDetails.FirstName).Contains(subjectCode)).ToList();
+                }
+                else if (unitOfWork.GradesRepo.Fetch(m => name.Contains(m.EnrolledSubject.Enrollments.UserDetails.LastName)).Any())
+                {
+                    model = unitOfWork.GradesRepo.Get(m =>
+                        name.Contains(m.EnrolledSubject.Enrollments.UserDetails.LastName)).ToList();
+                }
+                else if (unitOfWork.GradesRepo.Fetch(m => name.Contains(m.EnrolledSubject.Enrollments.UserDetails.FirstName)).Any())
+                {
+                    model = unitOfWork.GradesRepo.Get(m =>
+                        name.Contains(m.EnrolledSubject.Enrollments.UserDetails.LastName)).ToList();
+                }
+
+                else if (unitOfWork.GradesRepo.Fetch(m => m.EnrolledSubject.Enrollments.UserDetails.SchoolId == subjectCode).Any())
+                {
+                    model = unitOfWork.GradesRepo.Get(m =>
+                        name.Contains(m.EnrolledSubject.Enrollments.UserDetails.LastName)).ToList();
+                }
+
+
+
+
+            }
+
             if (User.IsInRole("Teacher"))
             {
                 var teacherId = User.Identity.GetUserId();

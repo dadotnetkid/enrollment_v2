@@ -3,33 +3,44 @@
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
+
 <div class="row">
-    <div class="col-lg-6">
-        <section class="content">
-
-            <!-- Default box -->
-            <div class="box">
-                <div class="box-header with-border">
-                    <b>Available Courses</b>
-                </div>
-                <div class="box-body with-border">
-                    @Html.Action("CoursesGridViewPartial")
-                </div>
-            </div>
-        </section>
+    <div class="col-lg-4">
+        @Html.Action("LatestEnrolledStudents")
     </div>
-    <div class="col-lg-6">
-        <section class="content">
-
-            <!-- Default box -->
-            <div class="box">
-                <div class="box-header with-border">
-                    <b>Announcements</b>
-                </div>
-                <div class="box-body with-border">
-                    @Html.Action("AnnouncementGridViewPartial")
-                </div>
-            </div>
-        </section>
+    <div class="col-lg-4">
+        @Html.Action("Announcements")
     </div>
 </div>
+@*<div class="row">
+        <div class="col-lg-6">
+            <section class="content">
+
+                <!-- Default box -->
+                <div class="box">
+                    <div class="box-header with-border">
+                        <b>Available Courses</b>
+                    </div>
+                    <div class="box-body with-border">
+                        @Html.Action("CoursesGridViewPartial")
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-6">
+            <section class="content">
+
+                <!-- Default box -->
+                <div class="box">
+                    <div class="box-header with-border">
+                        <b>Announcements</b>
+                    </div>
+                    <div class="box-body with-border">
+                        @Html.Action("AnnouncementGridViewPartial")
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>*@

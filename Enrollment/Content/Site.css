@@ -110,3 +110,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     max-width: 500px !important;
 }
 
+#AnnouncementGridView_DXMainTable .dxgv {
+    max-width: 300px !important;
+}

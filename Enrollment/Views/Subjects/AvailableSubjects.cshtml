@@ -7,7 +7,6 @@
 
 @Html.Action("AvailableSubjectsGridView")
 <div id="container">
-
 </div>
 <script>
     function showCopySubjectPopup() {
@@ -19,5 +18,12 @@
                 hideLoading();
             }
         });
+    }
+    var onSuccessCopy = function (e) {
+        hideLoading();
+        if (e.success === true) {
+            AvailableSubjectsGridView.PerformCallback();
+            popCopyAvailableSubject.Hide();
+        }
     }
 </script>

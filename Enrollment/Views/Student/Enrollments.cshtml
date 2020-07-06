@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Enrollments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+@Html.Action("EnrollmentGridViewPartial")
+
+<div id="billing-container">
+
+</div>
+<script>
+    function showBilling(enrollmentId) {
+        showLoading();
+        $.ajax({
+            url: '@Url.Action("StudentBillingStatementPartial", "Reports")',
+            data: { enrollmentId: enrollmentId },
+            success: function (html) {
+                $('#billing-container').html(html);
+                hideLoading();
+            }
+        })
+    }
+</script>

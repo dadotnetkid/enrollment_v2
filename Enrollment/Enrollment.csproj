@@ -211,8 +211,10 @@
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SchedulesController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\SubjectsController.cs" />
     <Compile Include="Controllers\TeacherSchedulesController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -509,6 +511,19 @@
     <Content Include="Views\Subjects\CopyAvailableSubjects.cshtml" />
     <Content Include="Views\Subjects\CopyAvailableSubjectsPartial.cshtml" />
     <Content Include="Views\Subjects\MasterGridCoursesPartial.cshtml" />
+    <Content Include="Views\Student\Billings.cshtml" />
+    <Content Include="Views\Student\_BillingsGridViewPartial.cshtml" />
+    <Content Include="Views\Student\Grades.cshtml" />
+    <Content Include="Views\Student\_GradesGridViewPartial.cshtml" />
+    <Content Include="Views\Student\Enrollments.cshtml" />
+    <Content Include="Views\Student\_EnrollmentGridViewPartial.cshtml" />
+    <Content Include="Views\Student\_BillingsDetailGridViewPartial.cshtml" />
+    <Content Include="Views\Home\LatestEnrolledStudents.cshtml" />
+    <Content Include="Views\Home\Announcements.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Test\_StudentGridViewPartial.cshtml" />
+    <Content Include="Views\Test\AddEditUsers.cshtml" />
+    <Content Include="Views\Test\_ListBoxPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

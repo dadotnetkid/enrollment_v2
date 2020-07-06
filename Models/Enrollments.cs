@@ -25,6 +25,7 @@ namespace Models
         public string StudentId { get; set; }
         public Nullable<int> AvailableCourseId { get; set; }
         public Nullable<bool> IsDrop { get; set; }
+        public Nullable<System.DateTime> DateCreated { get; set; }
     
         public virtual AvailableCourses AvailableCourses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
